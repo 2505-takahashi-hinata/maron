@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <title>ログイン</title>
+</head>
+<body>
+    <div class="header-contents">
+        <h2>ログイン</h2>
+    </div>
+    <div class="main-contents">
+        <form method="post" action="/login" th:object="${formModel}">
+            <!--エラーメッセージ-->
+            <div class="errorMessages" th:each="error : ${#fields.detailedErrors()}"  th:text="${error.message}"></div>
+            <div class="errorMessages" th:each="message : ${message}" th:text="${message}"></div>
+
+            <!--入力欄-->
+            <div>
+                <>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

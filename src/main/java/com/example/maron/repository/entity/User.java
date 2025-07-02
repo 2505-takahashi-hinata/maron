@@ -34,7 +34,7 @@ public class User {
     private int departmentId;
 
     @Column(name = "is_stopped")
-    private int isStopped;
+    private Short isStopped;
 
     @Column(name = "created_date", insertable = false, updatable = false)
     //タイムスタンプ型に直す　DBとentityの型を合わせるため
