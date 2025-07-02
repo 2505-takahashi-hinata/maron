@@ -11,12 +11,13 @@ import java.util.Date;
 public class UserForm {
 
     private int id;
+
     private String account;
     private String password;
     private String name;
     private int branchId;
     private int departmentId;
-    private int isStopped;
+    private Short isStopped;
     private Date createdDate;
     private Date updatedDate;
 }

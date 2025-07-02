@@ -6,12 +6,21 @@ import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
 @Getter
 @Setter
 public class User {
+
+//    @OneToMany
+//    @JoinColumn(name ="branch_id")
+//    private List<Branch> Branch;
+//
+//    @OneToMany
+//    @JoinColumn(name ="department_id")
+//    private List<Branch> Department;
 
     @Id
     @Column
@@ -34,7 +43,7 @@ public class User {
     private int departmentId;
 
     @Column(name = "is_stopped")
-    private int isStopped;
+    private Short isStopped;
 
     @Column(name = "created_date", insertable = false, updatable = false)
     //タイムスタンプ型に直す　DBとentityの型を合わせるため

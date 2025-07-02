@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+
+
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <title>ユーザー管理</title>
+</head>
+<body>
+<div class="header-contents">
+    <h1>ユーザー管理画面</h1>
+</div>
+<div class="main-contents">
+    <!--エラーメッセージ表示-->
+    <div class="errorMessages" th:each="message : ${message}" th:text="${message}"></div>
+    <!--新規登録ボタン-->
+    <a href="/newUser">
+        <button class="new-button" type="button">新規タスク</button>
+    </a>
+    <!--社員一覧-->
+    <div class="user-icon" th:each="user : ${users}">
+        アカウント名：<span th:text="${user.account}"/>
+        ユーザー名：<span th:text="${user.name}"/>
+        支社：<span th:text="${user.account}"/>
+        部署：<span th:text="${user.account}"/>
+        <form th:action="@{/updateStatus/{id}(id=${user.id})}" th:method="put">
+            ステータス：
+            <select class ="status" name ="status">
+                <option  th:each="map : ${MapStatus}"
+                         th:value="${map.key}"
+                         th:text="${map.value}"
+                         th:selected="${map.key == user.status}">
+                </option>
+            </select>
+            <input type="submit" value="変更" class="変更">
+        </form>
+        <!--編集・削除-->
+        <div class="edit-button">
+            <a th:href="@{/edit/{id}(id=${user.id})}">
+                <input type="button" value="編集">
+            </a>
+        </div>
+    </div>
+</div>
+
+<!--jQuery-->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="/js/main.js"></script>
+</body>
+</html>
