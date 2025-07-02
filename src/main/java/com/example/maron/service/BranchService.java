@@ -23,19 +23,17 @@ public class BranchService {
      */
     public List<BranchForm> findAllBranch() throws ParseException {
         List<Branch> results = branchRepository.findAll();
-        List<BranchForm> Branches = setBranchForm(results);
-        return Branches;
+        return setBranchForm(results);
     }
 
     private List<BranchForm> setBranchForm(List<Branch> results) {
         List<BranchForm> branches = new ArrayList<>();
-        for (int i = 0; i < results.size(); i++) {
+        for (Branch value : results) {
             BranchForm branch = new BranchForm();
-            Branch result = results.get(i);
-            branch.setId(result.getId());
-            branch.setName(result.getName());
-            branch.setCreatedDate(result.getCreatedDate());
-            branch.setUpdatedDate(result.getUpdatedDate());
+            branch.setId(value.getId());
+            branch.setName(value.getName());
+            branch.setCreatedDate(value.getCreatedDate());
+            branch.setUpdatedDate(value.getUpdatedDate());
             branches.add(branch);
         }
         return branches;

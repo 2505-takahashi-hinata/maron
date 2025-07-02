@@ -1,6 +1,7 @@
 package com.example.maron.service;
 
 import com.example.maron.controller.form.DepartmentForm;
+import com.example.maron.repository.DepartmentRepository;
 import com.example.maron.repository.UserRepository;
 import com.example.maron.repository.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,26 +14,24 @@ import java.util.List;
 @Service
 public class DepartmentService {
     @Autowired
-    UserRepository userRepository;
+    DepartmentRepository DepartmentRepository;
 
     /*
      * レコード全件取得処理
      */
     public List<DepartmentForm> findAllUser() throws ParseException {
-        List<Department> results = userRepository.findAll();
-        List<DepartmentForm> Departments = setDepartmentForm(results);
-        return Departments;
+        List<Department> results = DepartmentRepository.findAll();
+        return setDepartmentForm(results);
     }
 
     private List<DepartmentForm> setDepartmentForm(List<Department> results) {
         List<DepartmentForm> departments = new ArrayList<>();
-        for (int i = 0; i < results.size(); i++) {
+        for (Department value : results) {
             DepartmentForm department = new DepartmentForm();
-            Department result = results.get(i);
-            department.setId(result.getId());
-            department.setName(result.getName());
-            department.setCreatedDate(result.getCreatedDate());
-            department.setUpdatedDate(result.getUpdatedDate());
+            department.setId(value.getId());
+            department.setName(value.getName());
+            department.setCreatedDate(value.getCreatedDate());
+            department.setUpdatedDate(value.getUpdatedDate());
             departments.add(department);
         }
         return departments;

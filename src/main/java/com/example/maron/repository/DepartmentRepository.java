@@ -9,5 +9,4 @@ import java.util.List;
 
 @Repository
 public interface DepartmentRepository extends JpaRepository<Department, Integer> {
-    public List<Department> findAll();
 }
