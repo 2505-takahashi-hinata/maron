@@ -16,7 +16,7 @@ public class UserForm {
     private String name;
     private int branchId;
     private int departmentId;
-    private int isStopped;
+    private Short isStopped;
     private Date createdDate;
     private Date updatedDate;
 }
