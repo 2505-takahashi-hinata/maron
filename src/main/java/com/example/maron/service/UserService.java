@@ -15,11 +15,12 @@ public class UserService {
     UserRepository UserRepository;
 
     //ログイン情報取得
-    public UserForm loginCheck(String encPassword, String account) {
-        List<User> results = new ArrayList<>();
-        results.add((User) UserRepository.findByAccoutAndPassword(encPassword, account));
+    public UserForm loginCheck(String account, String password) {
+//        List<User> results = new ArrayList<>();
+//        results.add((User) UserRepository.findByAccountAndPassword(account, password));
+        List<User> results =  UserRepository.findByAccountAndPassword(account, password);
         //ユーザ情報０件の場合nullを返す
-        if (results.isEmpty()){
+        if (results == null || results.isEmpty()){
             return null;
         }
         List<UserForm> reports = setUserForm(results);

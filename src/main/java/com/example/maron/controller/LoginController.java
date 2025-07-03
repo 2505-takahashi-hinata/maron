@@ -8,7 +8,6 @@ import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -28,18 +27,18 @@ public class LoginController {
         ModelAndView mav = new ModelAndView();
         UserForm userForm = new UserForm();
          //空のUserFormを保管
-        mav.addObject("formModel", userForm);
+        mav.addObject("userForm", userForm);
         mav.setViewName("/login");
         return mav;
     }
 
     //ログイン処理
     @PostMapping("/login")
-    public ModelAndView loginCheck(@ModelAttribute("formModel") @Valid UserForm userForm, BindingResult result){
+    public ModelAndView loginCheck(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult result){
         //入力チェック　エラーの場合はログイン画面へフォワード
         ModelAndView mav = new ModelAndView();
         if (result.hasErrors()) {
-            mav.addObject("formModel", userForm);
+            mav.addObject("userForm", userForm);
             mav.setViewName("/login");
             return mav;
         }
@@ -47,7 +46,7 @@ public class LoginController {
         String encPassword = encrypt(userForm.getPassword());
         String account = userForm.getAccount();
         //データベースからユーザ情報取得
-        userForm = UserService.loginCheck(encPassword, account);
+        userForm = UserService.loginCheck(account, encPassword);
         //ユーザ情報チェック　情報ない場合・停止中の場合はログイン画面へフォワード
         if ((userForm == null)|| (userForm.getIsStopped() == 1 )) {
             mav.addObject("message", "ログインに失敗しました");
@@ -71,6 +70,14 @@ public class LoginController {
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    //ログアウト処理
+    @GetMapping("/logout")
+    public ModelAndView logout() {
+        //セッション内の情報（ログインユーザー情報）を破棄
+        session.invalidate();
+        return new ModelAndView("redirect:/login");
     }
 
 }
