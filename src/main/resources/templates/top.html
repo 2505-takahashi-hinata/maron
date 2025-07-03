@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>ホーム画面</title>
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script th:src="@{/js/main.js}" charset="utf-8"></script>
+</head>
+<body>
+<header>
+    <ul>
+        <li>
+            <form action="/newMessage">
+                <input type="submit" value="新規投稿" />
+            </form>
+        </li>
+        <li th:if="${userManageButton}" >
+            <form action="/userManage">
+                <input type="submit" value="ユーザ管理">
+            </form>
+        </li>
+        <li>
+            <form action="/logout">
+                <input type="submit" value="ログアウト" />
+            </form>
+        </li>
+    </ul>
+</header>
+    <div class="main-contents">
+<!--        絞り込み-->
+        <div>
+            <form action="/maron/">
+                <label>
+                    期限: <input type="date" name="start">～<input type="date" name="end">
+                    カテゴリー: <input type="text" name="category">
+                    <input type="submit" value="絞込">
+                </label>
+            </form>
+        </div>
+<!--        投稿表示-->
+        <h1>投稿</h1>
+        <div class="messages" th:each="message:${messages}">
+            <h2 th:text="${message.title}"></h2>
+            <h3>投稿内容</h3>
+                <p th:text="${message.text}"></p>
+                <p>カテゴリー：<span th:text="${message.category}"></span></p>
+                <p>投稿日時：<span th:text="${#dates.format(message.updatedDate,'yyyy/MM/dd')}"></span></p>
+                <p>投稿者：<span th:text="${message.name}"></span></p>
+            <h4>コメント</h4>
+                <div class="comments" th:each="comment:${comments}" th:if="${comment.messageId == message.id}">
+                <p th:text="${comment.text}"></p>
+                </div>
+            <div class="comment">
+                <form method="post" action="/newComment" th:object="${taskForm}">
+                <label>コメント投稿</label>
+                <textarea class="text-box" name="newComment" ></textarea><br/>
+                    <input type="hidden" th:value="${message.id}" name="messageId"/>
+                    <input type="submit" value="送信"/>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
