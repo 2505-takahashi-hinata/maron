@@ -12,14 +12,15 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
 import java.util.List;
 
 @Controller
-public class SingUpController {
+public class UserEditController {
     @Autowired
     UserService userService;
 
@@ -29,31 +30,28 @@ public class SingUpController {
     @Autowired
     DepartmentService departmentService;
 
-    @GetMapping("/SignUp")
-    public ModelAndView newContent() throws ParseException {
+    @GetMapping("/userEdit/{id}")
+    public ModelAndView userEdit (@PathVariable Integer id) throws ParseException {
         ModelAndView mav = new ModelAndView();
-        // form用の空のentityを準備
-        UserForm userForm = new UserForm();
+        UserForm userForm = userService.editUser(id);
         List<BranchForm> branchData = branchService.findAllBranch();
         List<DepartmentForm> departmentData = departmentService.findAllDepartment();
-        // 画面遷移先を指定
-        mav.setViewName("/signUp");
-        // 準備した空のFormを保管
         mav.addObject("user", userForm);
         mav.addObject("branch", branchData);
         mav.addObject("department", departmentData);
+        mav.setViewName("/userEdit");
         return mav;
     }
 
-    @PostMapping("/addUser")
-    public ModelAndView addUser(@ModelAttribute("formModel") @Validated UserForm userForm, BindingResult result){
+    @PutMapping("/userUpdate/{id}")
+    public ModelAndView saveUser(@PathVariable Integer id,
+                                 @ModelAttribute("formModel") @Validated UserForm userForm, BindingResult result) {
         ModelAndView mav = new ModelAndView();
         if(result.hasErrors()) {
-            mav.addObject("errors", result.getFieldErrors());
-            mav.setViewName("/addUser");
+            mav.setViewName("/userEdit");
             return mav;
         }
-        userService.saveUser(userForm);
+        userForm.setId(id);
         return new ModelAndView("redirect:/user");
     }
 }

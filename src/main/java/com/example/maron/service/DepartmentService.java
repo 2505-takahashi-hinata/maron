@@ -2,7 +2,6 @@ package com.example.maron.service;
 
 import com.example.maron.controller.form.DepartmentForm;
 import com.example.maron.repository.DepartmentRepository;
-import com.example.maron.repository.UserRepository;
 import com.example.maron.repository.entity.Department;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,7 @@ public class DepartmentService {
     /*
      * レコード全件取得処理
      */
-    public List<DepartmentForm> findAllUser() throws ParseException {
+    public List<DepartmentForm> findAllDepartment() throws ParseException {
         List<Department> results = DepartmentRepository.findAll();
         return setDepartmentForm(results);
     }

@@ -8,14 +8,21 @@
     <title>ユーザー管理</title>
 </head>
 <body>
-<div class="header-contents">
-    <h1>ユーザー管理画面</h1>
-</div>
+    <div class="header-contents">
+        <h1>ユーザー管理画面</h1>
+    </div>
+    <div class="errorMessages">
+        <ul>
+            <li th:each="error : ${#fields.detailedErrors()}">
+                <span th:text="${error.message}">Error message</span>
+            </li>
+        </ul>
+    </div>
 <div class="main-contents">
     <!--エラーメッセージ表示-->
     <div class="errorMessages" th:each="message : ${message}" th:text="${message}"></div>
     <!--新規登録ボタン-->
-    <a href="/newUser">
+    <a href="/SignUp">
         <button class="new-button" type="button">新規タスク</button>
     </a>
     <!--社員一覧-->
@@ -27,17 +34,17 @@
         <form th:action="@{/updateStatus/{id}(id=${user.id})}" th:method="put">
             ステータス：
             <select class ="status" name ="status">
-                <option  th:each="map : ${MapStatus}"
+                <option  th:each="map : ${changeStatus}"
                          th:value="${map.key}"
                          th:text="${map.value}"
-                         th:selected="${map.key == user.status}">
+                         th:selected="${map.key == user.isStopped}">
                 </option>
             </select>
             <input type="submit" value="変更" class="変更">
         </form>
         <!--編集・削除-->
         <div class="edit-button">
-            <a th:href="@{/edit/{id}(id=${user.id})}">
+            <a th:href="@{/userEdit/{id}(id=${user.id})}">
                 <input type="button" value="編集">
             </a>
         </div>

@@ -1,6 +1,7 @@
 package com.example.maron.repository.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,7 +27,6 @@ public class User {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column
     private String account;
 

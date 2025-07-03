@@ -19,32 +19,61 @@ public class UserService {
      * レコード全件取得処理
      */
     public List<UserForm> findAllUser() throws ParseException {
-        List<User> results = userRepository.findAllUser();
-        List<UserForm> users = setUserForm(results);
-        return users;
+        List<User> results = userRepository.findAll();
+        return setUserForm(results);
     }
+
 
     private List<UserForm> setUserForm(List<User> results) {
         List<UserForm> users = new ArrayList<>();
-        for (int i = 0; i < results.size(); i++) {
+        for (User value : results) {
             UserForm user = new UserForm();
-            User result = results.get(i);
-            user.setId(result.getId());
-            user.setAccount(result.getAccount());
-            user.setPassword(result.getPassword());
-            user.setBranchId(result.getBranchId());
-            user.setIsStopped(result.getIsStopped());
-            user.setDepartmentId(result.getDepartmentId());
-            user.setCreatedDate(result.getCreatedDate());
-            user.setUpdatedDate(result.getUpdatedDate());
+            user.setId(value.getId());
+            user.setAccount(value.getAccount());
+            user.setPassword(value.getPassword());
+            user.setName(value.getName());
+            user.setBranchId(value.getBranchId());
+            user.setIsStopped(value.getIsStopped());
+            user.setDepartmentId(value.getDepartmentId());
+            user.setCreatedDate(value.getCreatedDate());
+            user.setUpdatedDate(value.getUpdatedDate());
             users.add(user);
         }
         return users;
     }
-
+    //ステータス変更処理
     public void changeStatus(Integer id, Short status) {
         userRepository.updateStatusById(id, status);
     }
+
+
+    public void saveUser(UserForm userForm) {
+        User saveUser = setUserEntity(userForm);
+        userRepository.save(saveUser);
+    }
+
+    private User setUserEntity(UserForm reqUser) {
+        User user = new User();
+        user.setId(reqUser.getId());
+        user.setAccount(reqUser.getAccount());
+        user.setPassword(reqUser.getPassword());
+        user.setName(reqUser.getName());
+        user.setBranchId(reqUser.getBranchId());
+        user.setIsStopped(reqUser.getIsStopped());
+        user.setDepartmentId(reqUser.getDepartmentId());
+        user.setCreatedDate(reqUser.getCreatedDate());
+        user.setUpdatedDate(reqUser.getUpdatedDate());
+        return user;
+    }
+    //ユーザー編集画面遷移のためのID取得
+    public UserForm editUser(Integer id) {
+        List<User> results = new ArrayList<>();
+        results.add((User) userRepository.findById(id).orElse(null));
+        List<UserForm> users = setUserForm(results);
+        return users.get(0);
+    }
+
+
 }
 
 

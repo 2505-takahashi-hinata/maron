@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <title>ユーザー編集</title>
+  </head>
+  <body>
+    <div class="header-contents">
+      <h2>ユーザー編集</h2>
+    </div>
+    <div class="errorMessages">
+      <ul>
+        <li th:each="error : ${errors}">
+          <span th:text="${error.message}">Error message</span>
+        </li>
+      </ul>
+    </div>
+    <div class="main-contents">
+      <form th:action="@{/userUpdate/{id}(id=${user.id})}" method="put" th:object="${user}">
+
+      <div class="form-area">
+        <label>アカウント:</label>
+        <input th:field="*{account}" ><br/>
+        <label>パスワード:</label>
+          <input name="password" type="password"  th:field="*{password}" ><br/>
+        <label>パスワード（確認用）:</label>
+          <input  type="password"  th:field="*{anotherPassword}" ><br/>
+        <label>氏名:</label>
+          <input th:field="*{name}"><br/>
+        <label>配属支社
+          <select class ="select-branch" th:field="*{branchId}">
+            <option value="0">選択</option>
+            <option  th:each="branch : ${branch}"
+                     th:value="${branch.id}"
+                     th:text="${branch.name}"
+                     th:selected="${branch.id == user.branchId}">
+          </select>
+        </label>
+      <br/>
+        <label>配属部署
+          <select class ="select-department" th:field="*{departmentId}">
+            <option value="0">選択</option>
+            <option  th:each="department : ${department}"
+                     th:value="${department.id}"
+                     th:text="${department.name}"
+                     th:selected="${department.id == user.departmentId}">
+          </select>
+        </label>
+      </br>
+        <input type="hidden" name="isStopped" th:value="*{isStopped}">
+        <input type="submit" value="更新" />
+      </div>
+      </form>
+    </div>
+<div class="footer-contents">
+  <form action="/">
+    <input type="submit" value="戻る" />
+  </form>
+</div>
+</body>
+</html>

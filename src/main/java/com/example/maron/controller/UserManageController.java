@@ -29,13 +29,13 @@ public class UserManageController {
     DepartmentService departmentService;
 
     //ユーザー管理画面遷移処理
-    @GetMapping("/userManage")
+    @GetMapping("/user")
     public ModelAndView userManagement() throws ParseException {
         ModelAndView mav = new ModelAndView();
         // form用の空のentityを準備
         List<UserForm> userData = userService.findAllUser();
         // 画面遷移先を指定
-        mav.setViewName("/userManage");
+        mav.setViewName("/user");
         // 準備した空のFormを保管
         mav.addObject("changeStatus", changeStatus());
         mav.addObject("users", userData);
@@ -44,16 +44,16 @@ public class UserManageController {
 
     private Map<Short, String> changeStatus() {
         Map<Short, String> map = new LinkedHashMap<>();
-        map.put((short) 1, "有効");
-        map.put((short) 2, "無効");
+        map.put((short) 0, "稼働");
+        map.put((short) 1, "停止");
         return map;
     }
 
     //ユーザーの復活・停止ステータス
-    @PutMapping("/changeStatus/{id}")
-    public ModelAndView changeStatus (@PathVariable Integer id, @RequestParam(name = "status", required = false) Short status) {
+    @PutMapping("/updateStatus/{id}")
+    public ModelAndView updateStatus (@PathVariable Integer id, @RequestParam(name = "status", required = false) Short status) {
         // 編集した投稿を更新
         userService.changeStatus(id, status);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/user");
     }
 }
