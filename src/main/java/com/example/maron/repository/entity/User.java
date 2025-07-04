@@ -1,11 +1,13 @@
 package com.example.maron.repository.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -13,11 +15,18 @@ import java.util.Date;
 @Setter
 public class User {
 
+    @OneToOne
+    @JoinColumn()
+    private Branch branch;
+
+    @OneToOne
+    @JoinColumn
+    private Department department;
+
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @Column
     private String account;
 
@@ -27,10 +36,10 @@ public class User {
     @Column
     private String name;
 
-    @Column(name = "branch_id")
+    @Column(name = "branch_id", insertable = false,updatable = false)
     private int branchId;
 
-    @Column(name = "department_id")
+    @Column(name = "department_id",insertable = false,updatable = false)
     private int departmentId;
 
     @Column(name = "is_stopped")

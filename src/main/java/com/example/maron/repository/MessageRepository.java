@@ -1,5 +1,6 @@
 package com.example.maron.repository;
 
+public class MessageRepository {
 import com.example.maron.dto.UserMessage;
 import com.example.maron.repository.entity.Message;
 import org.springframework.data.jpa.repository.JpaRepository;

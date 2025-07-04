@@ -1,5 +1,6 @@
 package com.example.maron.service;
 
+public class MessageService {
 
 import com.example.maron.controller.form.MessageForm;
 import com.example.maron.controller.form.UserForm;

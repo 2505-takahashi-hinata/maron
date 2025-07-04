@@ -1,5 +1,6 @@
 package com.example.maron.service;
 
+public class CommentService {
 import com.example.maron.dto.UserComment;
 import com.example.maron.repository.CommentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
