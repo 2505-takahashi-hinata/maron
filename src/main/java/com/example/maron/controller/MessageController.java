@@ -50,14 +50,18 @@ public class MessageController {
 
     //投稿削除
     @DeleteMapping("/deleteMessage/{id}")
-    public ModelAndView deleteMessage(@PathVariable Integer id) {
-        //hiddenで渡されたUserIdと、セッション内のIDが一致してるかチェック
-        if () {
-            session.setAttribute("message", "コメントを入力してください");
+    public ModelAndView deleteMessage(@PathVariable Integer id, @RequestParam Integer messageUserId) {
+        //セッション内のログインユーザID取得
+        UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+        Integer userId = loginUser.getId();
+        //ログインユーザIDと投稿のユーザIDが一致するかチェック
+        if (!(userId.equals(messageUserId))) {
+            session.setAttribute("message", "無効なアクセスです");
             return new ModelAndView("redirect:/");
         }
-        //okの場合
         messageService.deleteMessage(id);
+        // セッションからエラーメッセージのみを削除
+        session.removeAttribute("message");
         // ホーム画面へリダイレクト
         return new ModelAndView("redirect:/");
     }
