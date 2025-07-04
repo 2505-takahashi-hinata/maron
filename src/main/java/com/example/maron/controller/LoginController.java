@@ -28,6 +28,11 @@ public class LoginController {
         UserForm userForm = new UserForm();
          //空のUserFormを保管
         mav.addObject("userForm", userForm);
+        //sessionから取得したエラーメッセージ保管
+        String message = (String) session.getAttribute("message");
+        mav.addObject("message", message);
+        // セッションからエラーメッセージを削除
+        session.removeAttribute("message");
         mav.setViewName("/login");
         return mav;
     }
@@ -56,7 +61,7 @@ public class LoginController {
         }
         //ログインOKの場合はログイン情報をセッションに追加し、トップ画面へリダイレクト
         session.setAttribute("loginUser", userForm);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/maron/");
     }
 
     //パスワード暗号化のメソッド

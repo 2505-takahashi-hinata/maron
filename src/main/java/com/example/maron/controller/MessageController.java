@@ -21,6 +21,7 @@ public class MessageController {
     //新規投稿画面表示
     @GetMapping("/newMessage")
     public ModelAndView newMessage() {
+
         ModelAndView mav = new ModelAndView();
         MessageForm messageForm = new MessageForm();
         //空のUserFormを保管
@@ -45,7 +46,7 @@ public class MessageController {
         //登録処理
         messageService.saveMessage(messageForm);
         //ホーム画面へリダイレクト
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/maron/");
     }
 
     //投稿削除
@@ -57,12 +58,12 @@ public class MessageController {
         //ログインユーザIDと投稿のユーザIDが一致するかチェック
         if (!(userId.equals(messageUserId))) {
             session.setAttribute("message", "無効なアクセスです");
-            return new ModelAndView("redirect:/");
+            return new ModelAndView("redirect:/maron/");
         }
         messageService.deleteMessage(id);
         // セッションからエラーメッセージのみを削除
         session.removeAttribute("message");
         // ホーム画面へリダイレクト
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/maron/");
     }
 }
