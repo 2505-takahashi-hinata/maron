@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -48,9 +49,32 @@ public class SingUpController {
     @PostMapping("/addUser")
     public ModelAndView addUser(@ModelAttribute("formModel") @Validated UserForm userForm, BindingResult result){
         ModelAndView mav = new ModelAndView();
+        List<String> errorMessages = new ArrayList<>();
+        //エラーメッセージを表示
         if(result.hasErrors()) {
             mav.addObject("errors", result.getFieldErrors());
-            mav.setViewName("/addUser");
+            mav.setViewName("/signUp");
+            return mav;
+        }
+
+        //パスワードの一致確認
+        if(!userForm.getPassword().equals(userForm.getAnotherPassword())) {
+            errorMessages.add("パスワードと確認用が一致しません");
+            mav.addObject("errors", errorMessages);
+            mav.setViewName("/signUp");
+            return mav;
+        }
+
+        //部署と支社の一致確認
+        if(userForm.getBranchId() == 1 && userForm.getDepartmentId() >= 3 ) {
+            errorMessages.add("支社と部署の組み合わせが不正です");
+            mav.addObject("errors", errorMessages);
+            mav.setViewName("/signUp");
+            return mav;
+        } else if(userForm.getBranchId() >= 2 && userForm.getDepartmentId() <= 2) {
+            errorMessages.add("支社と部署の組み合わせが不正です");
+            mav.addObject("errors", errorMessages);
+            mav.setViewName("/signUp");
             return mav;
         }
         userService.saveUser(userForm);

@@ -1,5 +1,6 @@
 package com.example.maron.controller.form;
 
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -25,9 +26,9 @@ public class UserForm {
     @NotBlank(message ="氏名を入力してください")
     @Size(max = 10, message = "氏名は10文字以下で入力してください")
     private String name;
-
+    @Min(value = 1, message = "支社を選択してください")
     private int branchId;
-
+    @Min(value = 1, message = "部署を選択してください")
     private int departmentId;
     private Short isStopped;
     private Date createdDate;
