@@ -1,7 +1,11 @@
 package com.example.maron.service;
 
+import com.example.maron.controller.form.BranchForm;
+import com.example.maron.controller.form.DepartmentForm;
 import com.example.maron.controller.form.UserForm;
 import com.example.maron.repository.UserRepository;
+import com.example.maron.repository.entity.Branch;
+import com.example.maron.repository.entity.Department;
 import com.example.maron.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,10 @@ import java.util.List;
 public class UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    BranchService branchRepository;
+    @Autowired
+    DepartmentService departmentRepository;
 
     /*
      * レコード全件取得処理
@@ -24,7 +32,7 @@ public class UserService {
     }
 
 
-    private List<UserForm> setUserForm(List<User> results) {
+    private List<UserForm> setUserForm(List<User> results) throws ParseException {
         List<UserForm> users = new ArrayList<>();
         for (User value : results) {
             UserForm user = new UserForm();
@@ -66,7 +74,7 @@ public class UserService {
         return user;
     }
     //ユーザー編集画面遷移のためのID取得
-    public UserForm editUser(Integer id) {
+    public UserForm editUser(Integer id) throws ParseException {
         List<User> results = new ArrayList<>();
         results.add((User) userRepository.findById(id).orElse(null));
         List<UserForm> users = setUserForm(results);

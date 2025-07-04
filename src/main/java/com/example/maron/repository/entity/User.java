@@ -15,13 +15,13 @@ import java.util.List;
 @Setter
 public class User {
 
-//    @OneToMany
-//    @JoinColumn(name ="branch_id")
-//    private List<Branch> Branch;
-//
-//    @OneToMany
-//    @JoinColumn(name ="department_id")
-//    private List<Branch> Department;
+    @OneToOne
+    @JoinColumn()
+    private Branch branch;
+
+    @OneToOne
+    @JoinColumn
+    private Department department;
 
     @Id
     @Column
@@ -36,10 +36,10 @@ public class User {
     @Column
     private String name;
 
-    @Column(name = "branch_id")
+    @Column(name = "branch_id", insertable = false,updatable = false)
     private int branchId;
 
-    @Column(name = "department_id")
+    @Column(name = "department_id",insertable = false,updatable = false)
     private int departmentId;
 
     @Column(name = "is_stopped")

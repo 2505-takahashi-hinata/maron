@@ -9,6 +9,7 @@ import com.example.maron.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -47,12 +48,15 @@ public class SingUpController {
     }
 
     @PostMapping("/addUser")
-    public ModelAndView addUser(@ModelAttribute("formModel") @Validated UserForm userForm, BindingResult result){
+    public ModelAndView addUser(@ModelAttribute("user") @Validated UserForm userForm, BindingResult result){
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
         //エラーメッセージを表示
         if(result.hasErrors()) {
-            mav.addObject("errors", result.getFieldErrors());
+            for(FieldError error : result.getFieldErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+            mav.addObject("errors", errorMessages);
             mav.setViewName("/signUp");
             return mav;
         }

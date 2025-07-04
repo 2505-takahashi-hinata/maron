@@ -9,14 +9,13 @@ import com.example.maron.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,14 +43,42 @@ public class UserEditController {
     }
 
     @PutMapping("/userUpdate/{id}")
-    public ModelAndView saveUser(@PathVariable Integer id,
-                                 @ModelAttribute("formModel") @Validated UserForm userForm, BindingResult result) {
+    public ModelAndView userUpdate(@PathVariable Integer id,
+                                 @ModelAttribute("user") @Validated UserForm userForm, BindingResult result) {
         ModelAndView mav = new ModelAndView();
+        List<String> errorMessages = new ArrayList<>();
+        //エラーメッセージを表示
         if(result.hasErrors()) {
-            mav.setViewName("/userEdit");
+            for(FieldError error : result.getFieldErrors()) {
+                errorMessages.add(error.getDefaultMessage());
+            }
+            mav.addObject("errors", errorMessages);
+            mav.setViewName("/signUp");
+            return mav;
+        }
+
+        //パスワードの一致確認
+        if(!userForm.getPassword().equals(userForm.getAnotherPassword())) {
+            errorMessages.add("パスワードと確認用が一致しません");
+            mav.addObject("errors", errorMessages);
+            mav.setViewName("/signUp");
+            return mav;
+        }
+
+        //部署と支社の一致確認
+        if(userForm.getBranchId() == 1 && userForm.getDepartmentId() >= 3 ) {
+            errorMessages.add("支社と部署の組み合わせが不正です");
+            mav.addObject("errors", errorMessages);
+            mav.setViewName("/signUp");
+            return mav;
+        } else if(userForm.getBranchId() >= 2 && userForm.getDepartmentId() <= 2) {
+            errorMessages.add("支社と部署の組み合わせが不正です");
+            mav.addObject("errors", errorMessages);
+            mav.setViewName("/signUp");
             return mav;
         }
         userForm.setId(id);
+        userService.saveUser(userForm);
         return new ModelAndView("redirect:/user");
     }
 }

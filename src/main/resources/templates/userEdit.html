@@ -17,8 +17,7 @@
       </ul>
     </div>
     <div class="main-contents">
-      <form th:action="@{/userUpdate/{id}(id=${user.id})}" method="put" th:object="${user}">
-
+      <form th:action="@{/userUpdate/{id}(id=${user.id})}" th:method="put"  th:object="${user}">
       <div class="form-area">
         <label>アカウント:</label>
         <input th:field="*{account}" ><br/>
