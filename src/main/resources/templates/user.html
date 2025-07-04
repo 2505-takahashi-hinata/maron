@@ -29,8 +29,8 @@
     <div class="user-icon" th:each="user : ${users}">
         アカウント名：<span th:text="${user.account}"/>
         ユーザー名：<span th:text="${user.name}"/>
-        支社：<span th:text="${user.account}"/>
-        部署：<span th:text="${user.account}"/>
+        支社：<span th:text="${user.branchName}"/>
+        部署：<span th:text="${user.departmentName}"/>
         <form th:action="@{/updateStatus/{id}(id=${user.id})}" th:method="put">
             ステータス：
             <select class ="status" name ="status">

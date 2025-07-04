@@ -1,6 +1,7 @@
 package com.example.maron.controller;
 
 import com.example.maron.controller.form.UserForm;
+import com.example.maron.dto.userManage;
 import com.example.maron.service.BranchService;
 import com.example.maron.service.DepartmentService;
 import com.example.maron.service.UserService;
@@ -33,7 +34,7 @@ public class UserManageController {
     public ModelAndView userManagement() throws ParseException {
         ModelAndView mav = new ModelAndView();
         // form用の空のentityを準備
-        List<UserForm> userData = userService.findAllUser();
+        List<userManage> userData = userService.findAllUser();
         // 画面遷移先を指定
         mav.setViewName("/user");
         // 準備した空のFormを保管

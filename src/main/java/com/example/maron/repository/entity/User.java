@@ -14,15 +14,6 @@ import java.util.List;
 @Getter
 @Setter
 public class User {
-
-    @OneToOne
-    @JoinColumn()
-    private Branch branch;
-
-    @OneToOne
-    @JoinColumn
-    private Department department;
-
     @Id
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +27,10 @@ public class User {
     @Column
     private String name;
 
-    @Column(name = "branch_id", insertable = false,updatable = false)
+    @Column(name = "branch_id")
     private int branchId;
 
-    @Column(name = "department_id",insertable = false,updatable = false)
+    @Column(name = "department_id")
     private int departmentId;
 
     @Column(name = "is_stopped")

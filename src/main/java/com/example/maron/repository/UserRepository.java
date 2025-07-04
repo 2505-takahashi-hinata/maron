@@ -14,19 +14,12 @@ import java.util.List;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     //ユーザーの全件取得
-//    @Query(value = "SELECT" +
-//            "users.id," +
-//            "users.account," +
-//            "users.name," +
-//            "users.branch_id," +
-//            "users.department_id," +
-//            "users.is_stopped," +
-//            "branches.name," +
-//            "departments.name," +
-//            "FROM users" +
-//            "INNER JOIN branches" + "ON users.branch_id = branches.id" +
-//            "INNER JOIN departments" + "ON users.department_id = departments.id;", nativeQuery = true)
-//    public List<User> findAllUser();
+    @Query("SELECT u.id, u.account, u.name, u.branchId, u.departmentId, u.isStopped, " +
+            "b.name, " +
+            "d.name " +
+            "FROM User u INNER JOIN Branch b ON u.branchId = b.id " +
+            "INNER JOIN Department d ON u.departmentId = d.id ")
+    public List<Object[]> findAllUser();
 
     //ステータスの変更処理
     @Modifying

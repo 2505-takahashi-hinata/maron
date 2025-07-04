@@ -2,6 +2,7 @@ package com.example.maron.service;
 
 
 import com.example.maron.controller.form.UserForm;
+import com.example.maron.dto.userManage;
 import com.example.maron.repository.UserRepository;
 import com.example.maron.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,28 @@ public class UserService {
     /*
      * レコード全件取得処理
      */
-    public List<UserForm> findAllUser() throws ParseException {
-        List<User> results = userRepository.findAll();
-        return setUserForm(results);
+    public List<userManage> findAllUser() throws ParseException {
+        List<Object[]> users = userRepository.findAllUser();
+        return setDtoForm(users);
     }
-
+    //ユーザー管理画面取得用
+    private List<userManage> setDtoForm(List<Object[]> users) throws ParseException {
+        List<userManage> forms = new ArrayList<>();
+        for (Object[] objects : users) {
+            userManage user = new userManage();
+            user.setId((int)objects[0]);
+            user.setAccount((String)objects[1]);
+            user.setName((String)objects[2]);
+            user.setBranchId((int)objects[3]);
+            user.setDepartmentId((int)objects[4]);
+            user.setIsStopped((short)objects[5]);
+            user.setBranchName((String)objects[6]);
+            user.setDepartmentName((String)objects[7]);
+            forms.add(user);
+        }
+        return forms;
+    }
+    //ユーザー編集画面取得用
     private List<UserForm> setUserForm(List<User> results) throws ParseException {
         List<UserForm> users = new ArrayList<>();
         for (User value : results) {
@@ -44,6 +62,14 @@ public class UserService {
             users.add(user);
         }
         return users;
+    }
+
+    //ユーザー編集画面遷移のためのID取得
+    public UserForm editUser(Integer id) throws ParseException {
+        List<User> results = new ArrayList<>();
+        results.add((User) userRepository.findById(id).orElse(null));
+        List<UserForm> users = setUserForm(results);
+        return users.get(0);
     }
     //ステータス変更処理
     public void changeStatus(Integer id, Short status) {
@@ -83,12 +109,4 @@ public class UserService {
         user.setUpdatedDate(reqUser.getUpdatedDate());
         return user;
     }
-    //ユーザー編集画面遷移のためのID取得
-    public UserForm editUser(Integer id) throws ParseException {
-        List<User> results = new ArrayList<>();
-        results.add((User) userRepository.findById(id).orElse(null));
-        List<UserForm> users = setUserForm(results);
-        return users.get(0);
-    }
-
 }
