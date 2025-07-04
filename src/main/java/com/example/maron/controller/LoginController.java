@@ -28,6 +28,11 @@ public class LoginController {
         UserForm userForm = new UserForm();
          //空のUserFormを保管
         mav.addObject("userForm", userForm);
+        //sessionから取得したエラーメッセージ保管
+        String message = (String) session.getAttribute("message");
+        mav.addObject("message", message);
+        // セッションからエラーメッセージを削除
+        session.removeAttribute("message");
         mav.setViewName("/login");
         return mav;
     }

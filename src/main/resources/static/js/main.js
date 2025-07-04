@@ -1,3 +1,12 @@
+
+$(function() {
+    $('.deleteMessage') .on('click', function() {
+         if(!confirm('削除してよいですか？')){
+            return false;
+         }
+    });
+});
+
 $(document).ready(function() {
     //コメント削除ボタン
     $('.deleteComment').on('click',function(){
