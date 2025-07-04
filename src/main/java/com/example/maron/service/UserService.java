@@ -1,11 +1,8 @@
 package com.example.maron.service;
 
-import com.example.maron.controller.form.BranchForm;
-import com.example.maron.controller.form.DepartmentForm;
+
 import com.example.maron.controller.form.UserForm;
 import com.example.maron.repository.UserRepository;
-import com.example.maron.repository.entity.Branch;
-import com.example.maron.repository.entity.Department;
 import com.example.maron.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -60,10 +57,10 @@ public class UserService {
     }
 
     //ログイン情報取得
-    public UserForm loginCheck(String account, String password) {
+    public UserForm loginCheck(String account, String password) throws ParseException {
 //        List<User> results = new ArrayList<>();
 //        results.add((User) UserRepository.findByAccountAndPassword(account, password));
-        List<User> results =  UserRepository.findByAccountAndPassword(account, password);
+        List<User> results =  userRepository.findByAccountAndPassword(account, password);
         //ユーザ情報０件の場合nullを返す
         if (results == null || results.isEmpty()){
             return null;

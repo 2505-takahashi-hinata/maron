@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 
 @Controller
 public class LoginController {
@@ -39,7 +40,7 @@ public class LoginController {
 
     //ログイン処理
     @PostMapping("/login")
-    public ModelAndView loginCheck(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult result){
+    public ModelAndView loginCheck(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult result) throws ParseException {
         //入力チェック　エラーの場合はログイン画面へフォワード
         ModelAndView mav = new ModelAndView();
         if (result.hasErrors()) {
