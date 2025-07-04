@@ -31,7 +31,6 @@ public class UserService {
         return setUserForm(results);
     }
 
-
     private List<UserForm> setUserForm(List<User> results) throws ParseException {
         List<UserForm> users = new ArrayList<>();
         for (User value : results) {
@@ -60,6 +59,20 @@ public class UserService {
         userRepository.save(saveUser);
     }
 
+    //ログイン情報取得
+    public UserForm loginCheck(String account, String password) {
+//        List<User> results = new ArrayList<>();
+//        results.add((User) UserRepository.findByAccountAndPassword(account, password));
+        List<User> results =  UserRepository.findByAccountAndPassword(account, password);
+        //ユーザ情報０件の場合nullを返す
+        if (results == null || results.isEmpty()){
+            return null;
+        }
+        List<UserForm> reports = setUserForm(results);
+        return reports.get(0);
+    }
+
+    //Form→entityに詰め変え
     private User setUserEntity(UserForm reqUser) {
         User user = new User();
         user.setId(reqUser.getId());
@@ -81,7 +94,4 @@ public class UserService {
         return users.get(0);
     }
 
-
 }
-
-

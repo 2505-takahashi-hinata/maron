@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
 @Transactional
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
@@ -33,4 +32,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "UPDATE users SET is_stopped = :is_stopped, updated_date = CURRENT_TIMESTAMP WHERE id = :id", nativeQuery = true)
     void updateStatusById(@Param("id") Integer id, @Param("is_stopped") Short status);
 
+import java.util.Optional;
+
+@Transactional
+@Repository
+public interface UserRepository extends JpaRepository<User, Integer>{
+    List<User> findByAccountAndPassword(String account, String password);
 }
