@@ -1,5 +1,6 @@
 package com.example.maron.repository;
 
+import java.util.Optional;
 import com.example.maron.repository.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -31,11 +32,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Modifying
     @Query(value = "UPDATE users SET is_stopped = :is_stopped, updated_date = CURRENT_TIMESTAMP WHERE id = :id", nativeQuery = true)
     void updateStatusById(@Param("id") Integer id, @Param("is_stopped") Short status);
-
-import java.util.Optional;
-
-@Transactional
-@Repository
-public interface UserRepository extends JpaRepository<User, Integer>{
     List<User> findByAccountAndPassword(String account, String password);
 }
