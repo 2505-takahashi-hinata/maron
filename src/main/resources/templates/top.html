@@ -47,22 +47,23 @@
                 <p>カテゴリー：<span th:text="${message.category}"></span></p>
                 <p>投稿日時：<span th:text="${#dates.format(message.updatedDate,'yyyy/MM/dd')}"></span></p>
                 <p>投稿者：<span th:text="${message.name}"></span></p>
-            <h4>コメント</h4>
                 <div class="comments" th:each="comment:${comments}" th:if="${comment.messageId == message.id}">
-                <p th:text="${comment.text}"></p>
-                    <div >
-<!--                        ログインユーザとコメントのIdが一致していたら表示-->
-<!--                        <form th:action="@{/comment/delete/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id == comment.userId}">-->
-<!--                            <input type="submit" value="コメントの削除" class="delete"/>-->
-<!--                        </form>-->
+                    <h4>コメント</h4>
+                    <p th:text="${comment.text}"></p>
+                    <div  class="deleteComment">
+    <!--                        ログインユーザとコメントのIdが一致していたら表示-->
+                        <form th:action="@{/deleteComment/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id == comment.userId}">
+                            <input type="submit" value="コメントの削除" class="delete"/>
+                        </form>
                     </div>
                 </div>
             <div class="comment">
-                <form method="post" action="/newComment" th:object="${taskForm}">
-                <label>コメント投稿</label>
-                <textarea class="text-box" name="newComment" ></textarea><br/>
-                    <input type="hidden" th:value="${message.id}" name="messageId"/>
-                    <input type="submit" value="送信"/>
+
+                <form method="post" action="/addComment" th:object="${commentForm}">
+                    <label>コメント投稿</label>
+                    <textarea class="text-box" name="text" th:value="text" ></textarea><br/>
+                        <input type="hidden" th:value="${message.id}" name="messageId"/>
+                        <input type="submit" value="送信"/>
                 </form>
             </div>
         </div>

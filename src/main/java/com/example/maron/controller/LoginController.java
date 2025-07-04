@@ -42,11 +42,14 @@ public class LoginController {
             mav.setViewName("/login");
             return mav;
         }
-        //encryptメソッドでパスワード暗号化されたものを用意
-        String encPassword = encrypt(userForm.getPassword());
+//        //encryptメソッドでパスワード暗号化されたものを用意
+        String password = userForm.getPassword();
+//        String encPassword = encrypt(userForm.getPassword());
         String account = userForm.getAccount();
-        //データベースからユーザ情報取得
-        userForm = UserService.loginCheck(account, encPassword);
+//        //データベースからユーザ情報取得
+        userForm = UserService.loginCheck(account, password);
+//        userForm = UserService.loginCheck(account, encPassword);
+
         //ユーザ情報チェック　情報ない場合・停止中の場合はログイン画面へフォワード
         if ((userForm == null)|| (userForm.getIsStopped() == 1 )) {
             mav.addObject("message", "ログインに失敗しました");
@@ -56,7 +59,7 @@ public class LoginController {
         }
         //ログインOKの場合はログイン情報をセッションに追加し、トップ画面へリダイレクト
         session.setAttribute("loginUser", userForm);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/maron/");
     }
 
     //パスワード暗号化のメソッド
