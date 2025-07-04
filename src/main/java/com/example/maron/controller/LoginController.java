@@ -47,11 +47,14 @@ public class LoginController {
             mav.setViewName("/login");
             return mav;
         }
-        //encryptメソッドでパスワード暗号化されたものを用意
-        String encPassword = encrypt(userForm.getPassword());
+//        //encryptメソッドでパスワード暗号化されたものを用意
+        String password = userForm.getPassword();
+//        String encPassword = encrypt(userForm.getPassword());
         String account = userForm.getAccount();
-        //データベースからユーザ情報取得
-        userForm = UserService.loginCheck(account, encPassword);
+//        //データベースからユーザ情報取得
+        userForm = UserService.loginCheck(account, password);
+//        userForm = UserService.loginCheck(account, encPassword);
+
         //ユーザ情報チェック　情報ない場合・停止中の場合はログイン画面へフォワード
         if ((userForm == null)|| (userForm.getIsStopped() == 1 )) {
             mav.addObject("message", "ログインに失敗しました");

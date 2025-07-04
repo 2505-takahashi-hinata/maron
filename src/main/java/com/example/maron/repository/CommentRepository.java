@@ -1,12 +1,12 @@
 package com.example.maron.repository;
 
+
 import com.example.maron.dto.UserComment;
 import com.example.maron.repository.entity.Comment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment,Integer> {
@@ -15,4 +15,5 @@ public interface CommentRepository extends JpaRepository<Comment,Integer> {
             "FROM Comment c INNER JOIN User u ON c.userId = u.id " +
             "ORDER BY c.createdDate ASC LIMIT :limit")
     public List<Object[]>findAllOrderByUpdatedDateAsc(@Param("limit")Integer limit);
+
 }

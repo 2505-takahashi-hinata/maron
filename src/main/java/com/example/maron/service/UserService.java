@@ -1,18 +1,63 @@
 package com.example.maron.service;
 
+import com.example.maron.controller.form.BranchForm;
+import com.example.maron.controller.form.DepartmentForm;
 import com.example.maron.controller.form.UserForm;
 import com.example.maron.repository.UserRepository;
+import com.example.maron.repository.entity.Branch;
+import com.example.maron.repository.entity.Department;
 import com.example.maron.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class UserService {
     @Autowired
-    UserRepository UserRepository;
+    UserRepository userRepository;
+    @Autowired
+    BranchService branchRepository;
+    @Autowired
+    DepartmentService departmentRepository;
+
+    /*
+     * レコード全件取得処理
+     */
+    public List<UserForm> findAllUser() throws ParseException {
+        List<User> results = userRepository.findAll();
+        return setUserForm(results);
+    }
+
+    private List<UserForm> setUserForm(List<User> results) throws ParseException {
+        List<UserForm> users = new ArrayList<>();
+        for (User value : results) {
+            UserForm user = new UserForm();
+            user.setId(value.getId());
+            user.setAccount(value.getAccount());
+            user.setPassword(value.getPassword());
+            user.setName(value.getName());
+            user.setBranchId(value.getBranchId());
+            user.setIsStopped(value.getIsStopped());
+            user.setDepartmentId(value.getDepartmentId());
+            user.setCreatedDate(value.getCreatedDate());
+            user.setUpdatedDate(value.getUpdatedDate());
+            users.add(user);
+        }
+        return users;
+    }
+    //ステータス変更処理
+    public void changeStatus(Integer id, Short status) {
+        userRepository.updateStatusById(id, status);
+    }
+
+
+    public void saveUser(UserForm userForm) {
+        User saveUser = setUserEntity(userForm);
+        userRepository.save(saveUser);
+    }
 
     //ログイン情報取得
     public UserForm loginCheck(String account, String password) {
@@ -35,29 +80,18 @@ public class UserService {
         user.setPassword(reqUser.getPassword());
         user.setName(reqUser.getName());
         user.setBranchId(reqUser.getBranchId());
-        user.setDepartmentId(reqUser.getDepartmentId());
         user.setIsStopped(reqUser.getIsStopped());
+        user.setDepartmentId(reqUser.getDepartmentId());
+        user.setCreatedDate(reqUser.getCreatedDate());
         user.setUpdatedDate(reqUser.getUpdatedDate());
         return user;
     }
-
-    //entity→Formに詰め替え
-    private List<UserForm> setUserForm(List<User> results) {
-        List<UserForm> userForm = new ArrayList<>();
-        for (int i = 0; i < results.size(); i++) {
-            UserForm task = new UserForm();
-            User result = results.get(i);
-            task.setId(result.getId());
-            task.setId(result.getId());
-            task.setAccount(result.getAccount());
-            task.setPassword(result.getPassword());
-            task.setName(result.getName());
-            task.setBranchId(result.getBranchId());
-            task.setDepartmentId(result.getDepartmentId());
-            task.setIsStopped(result.getIsStopped());
-            task.setUpdatedDate(result.getUpdatedDate());
-            userForm.add(task);
-        }
-        return userForm;
+    //ユーザー編集画面遷移のためのID取得
+    public UserForm editUser(Integer id) throws ParseException {
+        List<User> results = new ArrayList<>();
+        results.add((User) userRepository.findById(id).orElse(null));
+        List<UserForm> users = setUserForm(results);
+        return users.get(0);
     }
+
 }
