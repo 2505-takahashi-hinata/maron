@@ -1,22 +1,22 @@
-package com.example.maron.controller.form;
+package com.example.maron.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
 @Getter
 @Setter
-public class UserForm {
-
+public class UserMessage {
     private int id;
-    private String account;
-    private String password;
+    private String text;
+    private int userId;
+    private String title;
+    private String category;
     private String name;
+    private String account;
     private int branchId;
     private int departmentId;
-    private Short isStopped;
     private Date createdDate;
     private Date updatedDate;
 }
