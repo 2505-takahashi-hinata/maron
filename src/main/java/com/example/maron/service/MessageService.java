@@ -2,10 +2,13 @@ package com.example.maron.service;
 
 
 import com.example.maron.controller.form.MessageForm;
+import com.example.maron.controller.form.UserForm;
 import com.example.maron.dto.UserMessage;
 import com.example.maron.repository.MessageRepository;
 import com.example.maron.repository.entity.Message;
+import com.example.maron.repository.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.util.StringUtils;
 
@@ -21,6 +24,7 @@ public class MessageService {
 
     @Autowired
     MessageRepository messageRepository;
+
     //    投稿全権取得
     public List<UserMessage> findAllMessage(LocalDate start, LocalDate end, String category){
         Integer limit = 100;
@@ -66,5 +70,27 @@ public class MessageService {
         return form;
     }
 
+    //投稿追加処理
+    public void saveMessage(MessageForm messageForm) {
+        Message saveMessage = setMessageEntity(messageForm);
+        messageRepository.save(saveMessage);
+    }
+
+    //投稿削除処理
+    public void deleteMessage(int id) {
+        messageRepository.deleteById(id);
+    }
+
+    //Form→Entityにつめかえ
+    private Message setMessageEntity(MessageForm reqMessage) {
+        Message message = new Message();
+        message.setId(reqMessage.getId());
+        message.setTitle(reqMessage.getTitle());
+        message.setText(reqMessage.getText());
+        message.setCategory(reqMessage.getCategory());
+        message.setUserId(reqMessage.getUserId());
+        message.setUpdatedDate(reqMessage.getUpdatedDate());
+        return message;
+    }
 
 }

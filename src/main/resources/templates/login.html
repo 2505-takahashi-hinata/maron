@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="styleSheet">
+    <title>ログイン</title>
+</head>
+<body>
+    <div class="header-contents">
+        <h2>ログイン</h2>
+    </div>
+    <div class="main-contents">
+        <form method="post" action="/login" th:object="${userForm}">
+            <!--エラーメッセージ-->
+            <li class="errorMessages" th:each="error : ${#fields.detailedErrors()}" th:text="${error.message}"></li>
+            <li class="errorMessages" th:each="message : ${message}" th:text="${message}"></li>
+            <!--入力欄-->
+            <div>
+                <label>アカウント名</label>
+                <input name="limitDate" type="text" th:field="*{account}" ><br/>
+                <label>パスワード</label>
+                <input name="limitDate" type="text" th:field="*{password}" ><br/>
+                <input type="submit" value="ログイン" />
+
+            </div>
+        </form>
+    </div>
+    <div class="footer-contents">
+        <!--トップ画面に戻る-->
+        <form action="/">
+            <input type="submit" value="戻る" />
+        </form>
+    </div>
+</body>
+</html>
