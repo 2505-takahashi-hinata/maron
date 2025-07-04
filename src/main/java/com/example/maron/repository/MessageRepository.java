@@ -12,17 +12,17 @@ import java.util.List;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message,Integer> {
-    @Query("SELECT m.id,m.text,m.userId,m.title,m.category," +
-            "u.name,u.account,u.branchId,u.department_id,m.createdDate,m.updatedDate," +
-            "FROM Message m INNER JOIN User u ON m.userId = u.id" +
-            "WHERE m.createdDate BETWEEN :start AND :end" +
-            "AND m.category LIKE %:category% ORDER BY m.createdDate DESC limit :limit")
-    public List<UserMessage> findByUpdatedDateBetweenAndCategoryOrderByUpdatedDateDesc(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("category") String category, @Param("limit")Integer limit);
-    @Query("SELECT m.id,m.text,m.userId,m.title,m.category," +
-            "u.name,u.account,u.branchId,u.department_id,m.createdDate,m.updatedDate," +
-            "FROM Message m INNER JOIN User u ON m.userId = u.id" +
-            "WHERE m.createdDate BETWEEN :start AND :end" +
-            " ORDER BY m.createdDate DESC limit :limit")
-    public List<UserMessage> findByUpdatedDateBetweenOrderByUpdatedDateDesc(@Param("start") LocalDateTime start,@Param("end") LocalDateTime end,@Param("limit")Integer limit);
+    @Query("SELECT m.id, m.text, m.userId, m.title, m.category, " +
+            "u.name, u.account, u.branchId, u.departmentId, m.createdDate, m.updatedDate " +
+            "FROM Message m INNER JOIN User u ON m.userId = u.id " +
+            "WHERE m.createdDate BETWEEN :start AND :end " +
+            "AND m.category LIKE %:category% ORDER BY m.updatedDate DESC LIMIT :limit")
+    public List<Object[]> findByUpdatedDateBetweenAndCategoryOrderByUpdatedDateDesc(@Param("start") LocalDateTime start, @Param("end") LocalDateTime end, @Param("category") String category, @Param("limit")Integer limit);
+    @Query("SELECT m.id, m.text, m.userId, m.title, m.category, " +
+            "u.name, u.account, u.branchId, u.departmentId, m.createdDate, m.updatedDate " +
+            "FROM Message m INNER JOIN User u ON m.userId = u.id " +
+            "WHERE m.createdDate BETWEEN :start AND :end " +
+            "ORDER BY m.updatedDate DESC LIMIT :limit")
+    public List<Object[]> findByUpdatedDateBetweenOrderByUpdatedDateDesc(@Param("start") LocalDateTime start,@Param("end") LocalDateTime end,@Param("limit")Integer limit);
 
 }

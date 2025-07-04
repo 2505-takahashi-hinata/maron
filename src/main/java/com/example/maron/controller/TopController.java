@@ -22,7 +22,9 @@ import java.util.List;
 public class TopController {
     @Autowired
     HttpSession session;
+    @Autowired
     MessageService messageService;
+    @Autowired
     CommentService commentService;
 
     @GetMapping("/maron/")
@@ -30,22 +32,22 @@ public class TopController {
                             @RequestParam(name = "end", required = false) LocalDate end,
                             @RequestParam(name = "category", required = false) String category) {
         ModelAndView mav = new ModelAndView();
-        boolean userManegeButton = false;
-        User loginUser = (User)session.getAttribute("loginUser");
-        if(loginUser.getDepartmentId() == 1){
-            userManegeButton = true;
-        }
+//        boolean userManegeButton = false;
+//        User loginUser = (User)session.getAttribute("loginUser");
+//        if(loginUser.getDepartmentId() == 1){
+//            userManegeButton = true;
+//        }
 
         List<UserMessage> messages = messageService.findAllMessage(start, end, category);
         List<UserComment> comments = commentService.findAllComment();
 
-        mav.setViewName("/maron/");
+        mav.setViewName("/top");
         mav.addObject("messages",messages);
         mav.addObject("comments",comments);
         mav.addObject("start",start);
         mav.addObject("end",end);
         mav.addObject("category",category);
-        mav.addObject("userManegeButton",userManegeButton);
+//        mav.addObject("userManegeButton",userManegeButton);
         return mav;
     }
 

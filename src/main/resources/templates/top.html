@@ -50,6 +50,12 @@
             <h4>コメント</h4>
                 <div class="comments" th:each="comment:${comments}" th:if="${comment.messageId == message.id}">
                 <p th:text="${comment.text}"></p>
+                    <div >
+<!--                        ログインユーザとコメントのIdが一致していたら表示-->
+<!--                        <form th:action="@{/comment/delete/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id == comment.userId}">-->
+<!--                            <input type="submit" value="コメントの削除" class="delete"/>-->
+<!--                        </form>-->
+                    </div>
                 </div>
             <div class="comment">
                 <form method="post" action="/newComment" th:object="${taskForm}">

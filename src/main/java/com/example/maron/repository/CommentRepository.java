@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment,Integer> {
     @Query("SELECT c.id,c.userId,c.messageId,c.text,c.createdDate,c.updatedDate," +
-            "u.account,u.name,u.branchId,u.departmentId" +
-            "FROM Comment c INNER JOIN User u ON c.userId = u.id" +
-            "ORDER BY c.createdDate DESC limit :limit")
-    public List<UserComment>findAll(@Param("limit")Integer limit);
+            "u.account,u.name,u.branchId,u.departmentId " +
+            "FROM Comment c INNER JOIN User u ON c.userId = u.id " +
+            "ORDER BY c.createdDate ASC LIMIT :limit")
+    public List<Object[]>findAllOrderByUpdatedDateAsc(@Param("limit")Integer limit);
 }

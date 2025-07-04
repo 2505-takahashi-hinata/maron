@@ -13,6 +13,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -20,7 +21,7 @@ public class MessageService {
 
     @Autowired
     MessageRepository messageRepository;
-
+    //    投稿全権取得
     public List<UserMessage> findAllMessage(LocalDate start, LocalDate end, String category){
         Integer limit = 100;
         LocalDateTime startDate;
@@ -36,18 +37,34 @@ public class MessageService {
             endDate = LocalDateTime.now();
         }
         if(!StringUtils.isEmpty(category)) {
-            List<UserMessage> messages = messageRepository.findByUpdatedDateBetweenAndCategoryOrderByUpdatedDateDesc(startDate, endDate, category, limit);
-            return messages;
+            List<Object[]> messages = messageRepository.findByUpdatedDateBetweenAndCategoryOrderByUpdatedDateDesc(startDate, endDate, category, limit);
+            return setDto(messages);
         }else {
-            List<UserMessage> messages = messageRepository.findByUpdatedDateBetweenOrderByUpdatedDateDesc(startDate, endDate, limit);
-            return messages;
+            List<Object[]> messages = messageRepository.findByUpdatedDateBetweenOrderByUpdatedDateDesc(startDate, endDate, limit);
+            return setDto(messages);
         }
 
     }
-
-//    public List<MessageForm> setMessageForm(List<Message>messages) {
-//        List<MessageForm> form = new ArrayList<>();
-//    }
+    //Object[]を詰めたリストから一つずつ取り出し、UserMessageDtoに詰め直してる
+    public List<UserMessage> setDto(List<Object[]>messages) {
+        List<UserMessage> form = new ArrayList<>();
+        for (Object[] objects:messages){
+            UserMessage dto = new UserMessage();
+            dto.setId((int)objects[0]);
+            dto.setText((String) objects[1]);
+            dto.setUserId((int)objects[2]);
+            dto.setTitle((String) objects[3]);
+            dto.setCategory((String) objects[4]);
+            dto.setName((String) objects[5]);
+            dto.setAccount((String) objects[6]);
+            dto.setBranchId((int)objects[7]);
+            dto.setDepartmentId((int)objects[8]);
+            dto.setCreatedDate((Date)objects[9]);
+            dto.setUpdatedDate((Date)objects[10]);
+            form.add(dto);
+        }
+        return form;
+    }
 
 
 }
