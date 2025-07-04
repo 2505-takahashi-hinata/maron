@@ -2,6 +2,7 @@ package com.example.maron.controller;
 
 import com.example.maron.controller.form.CommentForm;
 import com.example.maron.controller.form.MessageForm;
+import com.example.maron.controller.form.UserForm;
 import com.example.maron.dto.UserComment;
 import com.example.maron.dto.UserMessage;
 import com.example.maron.repository.entity.User;
@@ -32,22 +33,23 @@ public class TopController {
                             @RequestParam(name = "end", required = false) LocalDate end,
                             @RequestParam(name = "category", required = false) String category) {
         ModelAndView mav = new ModelAndView();
-//        boolean userManegeButton = false;
-//        User loginUser = (User)session.getAttribute("loginUser");
-//        if(loginUser.getDepartmentId() == 1){
-//            userManegeButton = true;
-//        }
+        boolean userManageButton = false;
+        UserForm loginUser = (UserForm)session.getAttribute("loginUser");
+        if(loginUser.getDepartmentId() == 1){
+            userManageButton = true;
+        }
 
         List<UserMessage> messages = messageService.findAllMessage(start, end, category);
         List<UserComment> comments = commentService.findAllComment();
 
         mav.setViewName("/top");
+        mav.addObject("loginUser",loginUser);
         mav.addObject("messages",messages);
         mav.addObject("comments",comments);
         mav.addObject("start",start);
         mav.addObject("end",end);
         mav.addObject("category",category);
-//        mav.addObject("userManegeButton",userManegeButton);
+        mav.addObject("userManageButton",userManageButton);
         return mav;
     }
 

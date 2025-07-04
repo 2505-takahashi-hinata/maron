@@ -1,7 +1,11 @@
 package com.example.maron.service;
 
+import com.example.maron.controller.form.CommentForm;
+import com.example.maron.controller.form.MessageForm;
 import com.example.maron.dto.UserComment;
 import com.example.maron.repository.CommentRepository;
+import com.example.maron.repository.entity.Comment;
+import com.example.maron.repository.entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +41,26 @@ public class CommentService {
             form.add(dto);
         }
         return form;
+    }
+
+    //コメント追加処理
+    public void saveComment(CommentForm commentForm) {
+        Comment comment = setCommentEntity(commentForm);
+        commentRepository.save(comment);
+    }
+
+    //Form→Entityにつめかえ
+    private Comment setCommentEntity(CommentForm commentForm) {
+        Comment comment = new Comment();
+        comment.setId(commentForm.getId());
+        comment.setText(commentForm.getText());
+        comment.setUserId(commentForm.getUserId());
+        comment.setMessageId(commentForm.getMessageId());
+        return comment;
+    }
+
+    //投稿削除処理
+    public void deleteComment(int id) {
+        commentRepository.deleteById(id);
     }
 }

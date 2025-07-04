@@ -45,7 +45,7 @@ public class MessageController {
         //登録処理
         messageService.saveMessage(messageForm);
         //ホーム画面へリダイレクト
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/maron/");
     }
 
     //投稿削除
