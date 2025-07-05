@@ -18,7 +18,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "b.name, " +
             "d.name " +
             "FROM User u INNER JOIN Branch b ON u.branchId = b.id " +
-            "INNER JOIN Department d ON u.departmentId = d.id ")
+            "INNER JOIN Department d ON u.departmentId = d.id " +
+            "ORDER BY u.isStopped ASC, u.id ASC")
     public List<Object[]> findAllUser();
 
     //ステータスの変更処理
