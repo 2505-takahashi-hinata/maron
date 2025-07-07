@@ -51,9 +51,10 @@ public class UserEditController {
             return new ModelAndView("redirect:/user");
         }
         UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+        int loginUserId = loginUser.getId();;
         List<BranchForm> branchData = branchService.findAllBranch();
         List<DepartmentForm> departmentData = departmentService.findAllDepartment();
-        mav.addObject("loginUser",loginUser);
+        mav.addObject("loginUser",loginUserId);
         mav.addObject("user", userForm);
         mav.addObject("branch", branchData);
         mav.addObject("department", departmentData);
@@ -97,7 +98,6 @@ public class UserEditController {
             mav.setViewName("/userEdit");
             return mav;
         }
-
         //アカウント重複用
         if(userService.checkAccount(userForm.getAccount(), userForm.getId())){
             errorMessages.add("アカウントが重複しています");

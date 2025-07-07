@@ -29,6 +29,7 @@
           <input  type="password"  th:field="*{anotherPassword}" ><br/>
         <label>氏名:</label>
           <input th:field="*{name}"><br/>
+        <div th:if="${loginUser != user.id}">
         <label>配属支社
           <select class ="select-branch" th:field="*{branchId}">
             <option value="0">選択</option>
@@ -48,6 +49,11 @@
             <option value="4">技術部</option>
           </select>
         </label>
+        </div>
+        <div th:if="${loginUser == user.id}">
+          <input type="hidden" name="branchId" th:value="*{branchId}">
+          <input type="hidden" name="departmentId" th:value="*{departmentId}">
+        </div>
       </br>
         <input type="hidden" name="isStopped" th:value="*{isStopped}">
         <input type="submit" value="更新" />

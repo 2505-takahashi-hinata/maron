@@ -40,10 +40,11 @@ public class UserManageController {
         // form用の空のentityを準備
         List<userManage> userData = userService.findAllUser();
         UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+        int loginUserId = loginUser.getId();
         // 画面遷移先を指定
         mav.setViewName("/user");
         // 準備した空のFormを保管
-        mav.addObject("loginUser",loginUser);
+        mav.addObject("loginUser", loginUserId);
         mav.addObject("changeStatus", changeStatus());
         mav.addObject("users", userData);
         return mav;

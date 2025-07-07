@@ -49,7 +49,7 @@
                          th:selected="${map.key == user.isStopped}">
                         </option>
                     </select>
-                    <div th:if="${loginUser.id != user.id}">
+                    <div th:if="${loginUser != user.id}">
                 <input type="submit" value="変更" class="変更">
                     </div>
                 </form>
