@@ -5,6 +5,7 @@ import com.example.maron.controller.form.UserForm;
 import com.example.maron.dto.userManage;
 import com.example.maron.repository.UserRepository;
 import com.example.maron.repository.entity.User;
+import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,7 +77,7 @@ public class UserService {
         userRepository.updateStatusById(id, status);
     }
 
-    public void saveUser(UserForm userForm) {
+    public void saveUser(UserForm userForm) throws ParseException {
         User saveUser = setUserEntity(userForm);
         userRepository.save(saveUser);
     }
@@ -93,11 +94,15 @@ public class UserService {
     }
 
     //Form→entityに詰め変え
-    private User setUserEntity(UserForm reqUser) {
+    private User setUserEntity(UserForm reqUser) throws ParseException {
         User user = new User();
         user.setId(reqUser.getId());
         user.setAccount(reqUser.getAccount());
-        user.setPassword(reqUser.getPassword());
+        if(!StringUtils.isBlank(reqUser.getPassword())) {
+            user.setPassword(reqUser.getPassword());
+        } else {
+            user.setPassword(editUser(reqUser.getId()).getPassword());
+        }
         user.setName(reqUser.getName());
         user.setBranchId(reqUser.getBranchId());
         user.setIsStopped(reqUser.getIsStopped());
