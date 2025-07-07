@@ -2,6 +2,7 @@ package com.example.maron.controller.form;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class MessageForm {
     private String title;
     @NotBlank(message ="本文を入力してください")
     @Size(max = 1000, message = "本文は1000文字以内で入力してください")
+    @Pattern(regexp = ".*\\S.*", message ="本文を入力してください")
     private String text;
     @NotBlank(message ="カテゴリを入力してください")
     @Size(max = 10, message = "カテゴリは10文字以内で入力してください")

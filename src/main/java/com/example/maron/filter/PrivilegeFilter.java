@@ -1,5 +1,6 @@
 package com.example.maron.filter;
 
+import com.example.maron.controller.form.UserForm;
 import com.example.maron.repository.entity.User;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class PrivilegeFilter implements Filter {
 
         //departmentIdが1(総務人事部)かチェック
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("loginUser");
+        UserForm user = (UserForm) session.getAttribute("loginUser");
 
         if (user.getDepartmentId() == 1){
             chain.doFilter(request, response);
