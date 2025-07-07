@@ -1,6 +1,6 @@
 
 $(function() {
-    $('.deleteMessage') .on('click', function() {
+    $('.deleteMessage') .off('click') .on('click', function() {
          if(!confirm('投稿を削除しますか？')){
             return false;
          }
@@ -9,7 +9,7 @@ $(function() {
 
 $(document).ready(function() {
     //コメント削除ボタン
-    $('.deleteComment').on('click',function(){
+    $('.deleteComment').off('click') .on('click',function(){
         if (confirm ('コメントを削除しますか？')) {
             return true;
         }

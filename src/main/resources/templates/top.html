@@ -17,7 +17,7 @@
             </form>
         </li>
         <li th:if="${userManageButton}" >
-            <form action="/userManage">
+            <form action="/user">
                 <input type="submit" value="ユーザ管理">
             </form>
         </li>
@@ -40,12 +40,13 @@
                 </label>
             </form>
         </div>
+        <li class="errorMessages" th:each="message : ${管理者フィルターエラー}" th:text="${message}"></li>
 <!--        投稿表示-->
         <h1>投稿</h1>
         <div class="messages" th:each="message:${messages}">
             <h2 th:text="${message.title}"></h2>
             <h3>投稿内容</h3>
-                <p th:text="${message.text}"></p>
+                <p th:text="${message.text}" style="white-space: pre-line;"></p>
                 <p>カテゴリー：<span th:text="${message.category}"></span></p>
                 <p>投稿日時：<span th:text="${#dates.format(message.updatedDate,'yyyy/MM/dd')}"></span></p>
                 <p>投稿者：<span th:text="${message.name}"></span></p>
@@ -53,16 +54,16 @@
                     <!--ログインユーザと投稿のUserIdが一致していたら表示-->
                     <form th:action="@{/deleteMessage/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == message.userId}">
                         <input type="hidden" name="messageUserId" th:value="${message.userId}">
-                        <input type="submit" value="投稿の削除" class="deleteMessage"/>
+                        <input type="submit" value="投稿の削除" />
                     </form>
                 </div>
                 <div class="comments" th:each="comment:${comments}" th:if="${comment.messageId == message.id}">
                     <h4>コメント</h4>
-                    <p th:text="${comment.text}"></p>
+                    <p th:text="${comment.text}" style="white-space: pre-line;"></p>
                     <div  class="deleteComment">
     <!--                        ログインユーザとコメントのIdが一致していたら表示-->
                         <form th:action="@{/deleteComment/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id == comment.userId}">
-                            <input type="submit" value="コメントの削除" class="delete"/>
+                            <input type="submit" value="コメントの削除" />
                         </form>
                     </div>
                 </div>
