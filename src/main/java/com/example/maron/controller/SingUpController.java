@@ -48,7 +48,7 @@ public class SingUpController {
     }
 
     @PostMapping("/addUser")
-    public ModelAndView addUser(@ModelAttribute("user") @Validated UserForm userForm, BindingResult result){
+    public ModelAndView addUser(@ModelAttribute("user") @Validated({UserForm.UserData.class}) UserForm userForm, BindingResult result){
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
         //エラーメッセージを表示
