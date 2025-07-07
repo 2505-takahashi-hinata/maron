@@ -1,6 +1,7 @@
 package com.example.maron.controller.form;
 
 
+import com.example.maron.controller.LoginController;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -16,10 +17,10 @@ import java.util.Date;
 public class UserForm {
     public static interface UserData{}
     private int id;
-    @NotBlank(message ="アカウントを入力してください", groups = {UserData.class})
+    @NotBlank(message ="アカウントを入力してください", groups = {LoginController.LoginGroup.class, UserData.class})
     @Pattern(regexp="^[a-z0-9]{6,20}$", message = "アカウントは半角英数字かつ6文字以上20文字以下で入力してください", groups = {UserData.class})
     private String account;
-    @NotBlank(message ="パスワードを入力してください", groups = {UserData.class})
+    @NotBlank(message ="パスワードを入力してください", groups = {LoginController.LoginGroup.class, UserData.class})
     @Pattern(regexp="^[a-z]{6,20}$", message = "パスワードは半角文字かつ6文字以上20文字以下で入力してください", groups = {UserData.class})
     private String password;
     @NotBlank(message ="パスワードを入力してください", groups = {UserData.class})

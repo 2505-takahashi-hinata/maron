@@ -49,6 +49,13 @@
                 <p>カテゴリー：<span th:text="${message.category}"></span></p>
                 <p>投稿日時：<span th:text="${#dates.format(message.updatedDate,'yyyy/MM/dd')}"></span></p>
                 <p>投稿者：<span th:text="${message.name}"></span></p>
+                <div  class="deleteMessage">
+                    <!--ログインユーザと投稿のUserIdが一致していたら表示-->
+                    <form th:action="@{/deleteMessage/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == message.userId}">
+                        <input type="hidden" name="messageUserId" th:value="${message.userId}">
+                        <input type="submit" value="投稿の削除" class="deleteMessage"/>
+                    </form>
+                </div>
                 <div class="comments" th:each="comment:${comments}" th:if="${comment.messageId == message.id}">
                     <h4>コメント</h4>
                     <p th:text="${comment.text}"></p>

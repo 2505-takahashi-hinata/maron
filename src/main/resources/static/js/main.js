@@ -1,7 +1,7 @@
 
 $(function() {
     $('.deleteMessage') .on('click', function() {
-         if(!confirm('削除してよいですか？')){
+         if(!confirm('投稿を削除しますか？')){
             return false;
          }
     });
@@ -23,4 +23,5 @@ $(function() {
             return false;
          }
     });
+});
 

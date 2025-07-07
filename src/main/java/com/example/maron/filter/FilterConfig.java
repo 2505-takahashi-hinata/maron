@@ -26,7 +26,7 @@ public class FilterConfig {
         FilterRegistrationBean<PrivilegeFilter> bean = new FilterRegistrationBean<>();
 
         bean.setFilter(new PrivilegeFilter());
-        //ログインフィルターが必要なURLテキストブロックに置換
+        //管理者権限が必要なURLテキストブロックに置換
         bean.addUrlPatterns("/userEdit/*");//ユーザー編集画面
         bean.addUrlPatterns("/user");//ユーザー管理画面
         bean.addUrlPatterns("/SignUp");//ユーザー登録画面
