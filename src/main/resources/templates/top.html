@@ -34,8 +34,8 @@
         <div>
             <form action="/maron/">
                 <label>
-                    期限: <input type="date" name="start">～<input type="date" name="end">
-                    カテゴリー: <input type="text" name="category">
+                    期限: <input type="date" name="start" th:value="${start}">～<input type="date" name="end" th:value="${end}">
+                    カテゴリー: <input type="text" name="category" th:value="${category}">
                     <input type="submit" value="絞込">
                 </label>
             </form>
@@ -67,7 +67,11 @@
                     </div>
                 </div>
             <div class="comment">
-
+                <!-- エラーメッセージ表示 -->
+                <div class="errorMessages"  th:if="${commentErrors != null and commentErrorId.messageId == message.id}"
+                     th:each="commentError : ${commentErrors}">
+                    <span th:text="${commentError}"></span>
+                </div>
                 <form method="post" action="/addComment" th:object="${commentForm}">
                     <label>コメント投稿</label>
                     <textarea class="text-box" name="text" th:value="text" ></textarea><br/>
@@ -78,7 +82,7 @@
         </div>
     </div>
     <!--jQuery-->
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="/js/main.js"></script>
+<!--    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>-->
+<!--    <script src="/js/main.js"></script>-->
 </body>
 </html>

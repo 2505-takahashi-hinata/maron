@@ -35,6 +35,7 @@ public class CommentController {
             for (ObjectError error : result.getAllErrors()) {
                 errorMessages.add(error.getDefaultMessage());
             }
+            session.setAttribute("commentForm", commentForm);
             session.setAttribute("commentErrors", errorMessages);
             mav.setViewName("redirect:/maron/");
             return mav;
