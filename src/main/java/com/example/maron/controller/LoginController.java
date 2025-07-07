@@ -4,10 +4,12 @@ import com.example.maron.controller.form.UserForm;
 import com.example.maron.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import jakarta.validation.groups.Default;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -37,10 +39,12 @@ public class LoginController {
         mav.setViewName("/login");
         return mav;
     }
-
+    public interface LoginGroup {}
     //ログイン処理
     @PostMapping("/login")
-    public ModelAndView loginCheck(@ModelAttribute("userForm") @Valid UserForm userForm, BindingResult result) throws ParseException {
+
+    public ModelAndView loginCheck(@ModelAttribute("userForm") @Validated(LoginGroup.class) UserForm userForm, BindingResult result) throws ParseException {
+
         //入力チェック　エラーの場合はログイン画面へフォワード
         ModelAndView mav = new ModelAndView();
         if (result.hasErrors()) {
@@ -55,7 +59,6 @@ public class LoginController {
 //        //データベースからユーザ情報取得
         userForm = UserService.loginCheck(account, password);
 //        userForm = UserService.loginCheck(account, encPassword);
-
         //ユーザ情報チェック　情報ない場合・停止中の場合はログイン画面へフォワード
         if ((userForm == null)|| (userForm.getIsStopped() == 1 )) {
             mav.addObject("message", "ログインに失敗しました");
@@ -67,6 +70,7 @@ public class LoginController {
         session.setAttribute("loginUser", userForm);
         return new ModelAndView("redirect:/maron/");
     }
+
 
     //パスワード暗号化のメソッド
     //SHA-256で暗号化し、バイト配列をBase64エンコーディング。暗号化された文字列をreturn
