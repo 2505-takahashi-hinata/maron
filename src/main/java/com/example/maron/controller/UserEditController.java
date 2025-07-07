@@ -45,7 +45,7 @@ public class UserEditController {
 
     @PutMapping("/userUpdate/{id}")
     public ModelAndView userUpdate(@PathVariable Integer id,
-                                   @ModelAttribute("user") @Validated({LoginController.LoginGroup.class, Default.class}) UserForm userForm, BindingResult result) {
+                                   @ModelAttribute("user") @Validated({LoginController.LoginGroup.class, UserForm.UserData.class}) UserForm userForm, BindingResult result) {
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
         //エラーメッセージを表示

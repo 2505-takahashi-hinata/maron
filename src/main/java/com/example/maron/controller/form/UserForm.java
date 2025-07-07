@@ -15,22 +15,22 @@ import java.util.Date;
 @Getter
 @Setter
 public class UserForm {
-
+    public static interface UserData{}
     private int id;
-    @NotBlank(message ="アカウントを入力してください", groups = LoginController.LoginGroup.class)
-    @Pattern(regexp="^[a-z0-9]{6,20}$", message = "アカウントは半角英数字かつ6文字以上20文字以下で入力してください")
+    @NotBlank(message ="アカウントを入力してください", groups = {LoginController.LoginGroup.class, UserData.class})
+    @Pattern(regexp="^[a-z0-9]{6,20}$", message = "アカウントは半角英数字かつ6文字以上20文字以下で入力してください", groups = {UserData.class})
     private String account;
-    @NotBlank(message ="パスワードを入力してください", groups = LoginController.LoginGroup.class)
-    @Pattern(regexp="^[a-z]{6,20}$", message = "パスワードは半角文字かつ6文字以上20文字以下で入力してください")
+    @NotBlank(message ="パスワードを入力してください", groups = {LoginController.LoginGroup.class, UserData.class})
+    @Pattern(regexp="^[a-z]{6,20}$", message = "パスワードは半角文字かつ6文字以上20文字以下で入力してください", groups = {UserData.class})
     private String password;
-    @NotBlank(message ="パスワードを入力してください")
+    @NotBlank(message ="パスワードを入力してください", groups = {UserData.class})
     private String anotherPassword;
-    @NotBlank(message ="氏名を入力してください")
-    @Size(max = 10, message = "氏名は10文字以下で入力してください")
+    @NotBlank(message ="氏名を入力してください", groups = {UserData.class})
+    @Size(max = 10, message = "氏名は10文字以下で入力してください", groups = {UserData.class})
     private String name;
-    @Min(value = 1, message = "支社を選択してください")
+    @Min(value = 1, message = "支社を選択してください", groups = {UserData.class})
     private int branchId;
-    @Min(value = 1, message = "部署を選択してください")
+    @Min(value = 1, message = "部署を選択してください", groups = {UserData.class})
     private int departmentId;
     private Short isStopped;
     private Date createdDate;
