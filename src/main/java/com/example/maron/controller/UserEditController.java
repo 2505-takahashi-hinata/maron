@@ -7,6 +7,7 @@ import com.example.maron.service.BranchService;
 import com.example.maron.service.DepartmentService;
 import com.example.maron.service.UserService;
 import io.micrometer.common.util.StringUtils;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -29,6 +30,8 @@ public class UserEditController {
 
     @Autowired
     DepartmentService departmentService;
+    @Autowired
+    HttpSession session;
 
     @GetMapping("/userEdit/{id}")
     public ModelAndView userEdit (@PathVariable String id) throws ParseException {
@@ -36,18 +39,21 @@ public class UserEditController {
         List<String> errorMessages = new ArrayList<>();
         if(StringUtils.isBlank(id) || !id.matches("^[1-9]+$")){
             errorMessages.add("不正なパラメータが入力されました");
-            mav.addObject("errors", errorMessages);
+            session.setAttribute("errors", errorMessages);
             return new ModelAndView("redirect:/user");
         }
         int intId = Integer.parseInt(id);
         UserForm userForm = userService.editUser(intId);
         if(userForm == null){
             errorMessages.add("不正なパラメーターが入力されました");
+            session.setAttribute("commentErrors", errorMessages);
             mav.addObject("errors", errorMessages);
             return new ModelAndView("redirect:/user");
         }
+        UserForm loginUser = (UserForm) session.getAttribute("loginUser");
         List<BranchForm> branchData = branchService.findAllBranch();
         List<DepartmentForm> departmentData = departmentService.findAllDepartment();
+        mav.addObject("loginUser",loginUser);
         mav.addObject("user", userForm);
         mav.addObject("branch", branchData);
         mav.addObject("department", departmentData);
@@ -55,11 +61,12 @@ public class UserEditController {
         return mav;
     }
 
-    @PutMapping("/userUpdate/{id}")
+    @PostMapping("/userUpdate/{id}")
     public ModelAndView userUpdate(@PathVariable Integer id,
-                                   @ModelAttribute("user") @Validated({LoginController.LoginGroup.class, UserForm.UserData.class}) UserForm userForm, BindingResult result) {
+                                   @ModelAttribute("user") @Validated({ UserForm.UserEdit.class}) UserForm userForm, BindingResult result) throws ParseException {
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
+        userForm.setId(id);
         //エラーメッセージを表示
         if(result.hasErrors()) {
             for(FieldError error : result.getFieldErrors()) {
@@ -90,7 +97,7 @@ public class UserEditController {
             mav.setViewName("/userEdit");
             return mav;
         }
-        userForm.setId(id);
+
         userService.saveUser(userForm);
         return new ModelAndView("redirect:/user");
     }
