@@ -42,9 +42,7 @@ public class LoginController {
     public interface LoginGroup {}
     //ログイン処理
     @PostMapping("/login")
-
     public ModelAndView loginCheck(@ModelAttribute("userForm") @Validated(LoginGroup.class) UserForm userForm, BindingResult result) throws ParseException {
-
         //入力チェック　エラーの場合はログイン画面へフォワード
         ModelAndView mav = new ModelAndView();
         if (result.hasErrors()) {
