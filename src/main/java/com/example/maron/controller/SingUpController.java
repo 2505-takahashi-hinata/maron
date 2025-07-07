@@ -6,6 +6,7 @@ import com.example.maron.controller.form.UserForm;
 import com.example.maron.service.BranchService;
 import com.example.maron.service.DepartmentService;
 import com.example.maron.service.UserService;
+import jakarta.validation.groups.Default;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -48,7 +49,8 @@ public class SingUpController {
     }
 
     @PostMapping("/addUser")
-    public ModelAndView addUser(@ModelAttribute("user") @Validated UserForm userForm, BindingResult result){
+    public ModelAndView addUser(@ModelAttribute("user") @Validated({LoginController.LoginGroup.class, UserForm.UserData.class}) UserForm userForm, BindingResult result){
+
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
         //エラーメッセージを表示
