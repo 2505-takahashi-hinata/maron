@@ -76,7 +76,6 @@ public class UserService {
         userRepository.updateStatusById(id, status);
     }
 
-
     public void saveUser(UserForm userForm) {
         User saveUser = setUserEntity(userForm);
         userRepository.save(saveUser);
@@ -84,8 +83,6 @@ public class UserService {
 
     //ログイン情報取得
     public UserForm loginCheck(String account, String password) throws ParseException {
-//        List<User> results = new ArrayList<>();
-//        results.add((User) UserRepository.findByAccountAndPassword(account, password));
         List<User> results =  userRepository.findByAccountAndPassword(account, password);
         //ユーザ情報０件の場合nullを返す
         if (results == null || results.isEmpty()){

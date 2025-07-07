@@ -58,6 +58,11 @@ public class TopController {
         mav.addObject("end",end);
         mav.addObject("category",category);
         mav.addObject("userManageButton",userManageButton);
+        //管理者権限フィルターにてsessionに格納したエラーメッセージ
+        String message = (String) session.getAttribute("message");
+        mav.addObject("管理者フィルターエラー", message);
+        // セッションからエラーメッセージを削除
+        session.removeAttribute("message");
         return mav;
     }
 

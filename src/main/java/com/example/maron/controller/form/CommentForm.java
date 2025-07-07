@@ -1,5 +1,6 @@
 package com.example.maron.controller.form;
 
+import com.example.maron.validator.Validator;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -13,7 +14,8 @@ import java.util.Date;
 public class CommentForm {
 
     private int id;
-    @NotBlank(message ="メッセージを入力してください")
+//    @NotBlank(message ="メッセージを入力してください")
+    @Validator(message ="メッセージを入力してください")
     @Size(max = 500, message = "500文字以内で入力してください")
     private String text;
     private int userId;
