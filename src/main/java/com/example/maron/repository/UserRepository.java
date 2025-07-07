@@ -27,4 +27,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query(value = "UPDATE users SET is_stopped = :is_stopped, updated_date = CURRENT_TIMESTAMP WHERE id = :id", nativeQuery = true)
     void updateStatusById(@Param("id") Integer id, @Param("is_stopped") Short status);
     List<User> findByAccountAndPassword(String account, String password);
+
+    boolean existsByAccount(String account);
+    boolean existsByAccountAndIdNot(String account, Integer id);
 }
