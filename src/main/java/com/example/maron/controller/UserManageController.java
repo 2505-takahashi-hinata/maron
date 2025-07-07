@@ -1,9 +1,11 @@
 package com.example.maron.controller;
 
+import com.example.maron.controller.form.UserForm;
 import com.example.maron.dto.userManage;
 import com.example.maron.service.BranchService;
 import com.example.maron.service.DepartmentService;
 import com.example.maron.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,15 +30,20 @@ public class UserManageController {
     @Autowired
     DepartmentService departmentService;
 
+    @Autowired
+    HttpSession session;
+
     //ユーザー管理画面遷移処理
     @GetMapping("/user")
     public ModelAndView userManagement() throws ParseException {
         ModelAndView mav = new ModelAndView();
         // form用の空のentityを準備
         List<userManage> userData = userService.findAllUser();
+        UserForm loginUser = (UserForm) session.getAttribute("loginUser");
         // 画面遷移先を指定
         mav.setViewName("/user");
         // 準備した空のFormを保管
+        mav.addObject("loginUser",loginUser);
         mav.addObject("changeStatus", changeStatus());
         mav.addObject("users", userData);
         return mav;

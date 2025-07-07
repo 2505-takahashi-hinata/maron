@@ -24,7 +24,6 @@ public class UserForm {
     @NotBlank(message ="パスワードを入力してください", groups = {LoginController.LoginGroup.class, UserData.class})
     @Pattern(regexp="^[a-z]{6,20}$", message = "パスワードは半角文字かつ6文字以上20文字以下で入力してください", groups = {UserData.class})
     private String password;
-    @NotBlank(message ="パスワードを入力してください", groups = {UserData.class})
     private String anotherPassword;
     @NotBlank(message ="氏名を入力してください", groups = {UserData.class, UserEdit.class})
     @Size(max = 10, message = "氏名は10文字以下で入力してください", groups = {UserData.class, UserEdit.class})
