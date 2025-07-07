@@ -19,7 +19,7 @@
       </ul>
     </div>
     <div class="main-contents">
-      <form th:action="@{/userUpdate/{id}(id=${user.id})}" th:method="put"  th:object="${user}">
+      <form th:action="@{/userUpdate/{id}(id=${user.id})}" th:method="post"  th:object="${user}">
       <div class="form-area">
         <label>アカウント:</label>
         <input th:field="*{account}" ><br/>
@@ -29,23 +29,24 @@
           <input  type="password"  th:field="*{anotherPassword}" ><br/>
         <label>氏名:</label>
           <input th:field="*{name}"><br/>
+
         <label>配属支社
           <select class ="select-branch" th:field="*{branchId}">
             <option value="0">選択</option>
-            <option  th:each="branch : ${branch}"
-                     th:value="${branch.id}"
-                     th:text="${branch.name}"
-                     th:selected="${branch.id == user.branchId}">
+            <option value="1">本社</option>
+            <option value="2">A支社</option>
+            <option value="3">B支社</option>
+            <option value="4">C支社</option>
           </select>
         </label>
       <br/>
         <label>配属部署
           <select class ="select-department" th:field="*{departmentId}">
             <option value="0">選択</option>
-            <option  th:each="department : ${department}"
-                     th:value="${department.id}"
-                     th:text="${department.name}"
-                     th:selected="${department.id == user.departmentId}">
+            <option value="1">総務人事部</option>
+            <option value="2">情報管理部</option>
+            <option value="3">営業部</option>
+            <option value="4">技術部</option>
           </select>
         </label>
       </br>
