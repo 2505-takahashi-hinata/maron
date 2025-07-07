@@ -109,4 +109,12 @@ public class UserService {
         user.setUpdatedDate(reqUser.getUpdatedDate());
         return user;
     }
+
+    public boolean checkAccount(String account, Integer id) {
+        if(id == null) {
+            return userRepository.existsByAccount(account);
+        } else {
+            return  userRepository.existsByAccountAndIdNot(account, id);
+        }
+    }
 }

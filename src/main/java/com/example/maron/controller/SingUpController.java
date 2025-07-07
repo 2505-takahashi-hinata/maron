@@ -83,6 +83,13 @@ public class SingUpController {
             mav.setViewName("/signUp");
             return mav;
         }
+        //アカウント重複用
+        if(userService.checkAccount(userForm.getAccount(), userForm.getId())){
+            errorMessages.add("アカウントが重複しています");
+            mav.addObject("errors", errorMessages);
+            mav.setViewName("/signUp");
+            return mav;
+        }
         userService.saveUser(userForm);
         return new ModelAndView("redirect:/user");
     }
