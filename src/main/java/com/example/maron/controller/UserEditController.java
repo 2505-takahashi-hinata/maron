@@ -65,6 +65,12 @@ public class UserEditController {
             return mav;
         }
 
+        if(userForm == null){
+            errorMessages.add("不正なパラメーターが入力されました");
+            mav.addObject("errors", errorMessages);
+            return new ModelAndView("redirect:/user");
+        }
+
         //部署と支社の一致確認
         if(userForm.getBranchId() == 1 && userForm.getDepartmentId() >= 3 ) {
             errorMessages.add("支社と部署の組み合わせが不正です");

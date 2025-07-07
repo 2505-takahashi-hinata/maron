@@ -13,7 +13,7 @@
     </div>
     <div class="errorMessages">
         <ul>
-            <li th:each="error : ${#fields.detailedErrors()}">
+            <li th:each="error : ${errors}">
                 <span th:text="${error.message}">Error message</span>
             </li>
         </ul>
