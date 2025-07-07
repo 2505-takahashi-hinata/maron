@@ -66,7 +66,7 @@ public class UserEditController {
                 errorMessages.add(error.getDefaultMessage());
             }
             mav.addObject("errors", errorMessages);
-            mav.setViewName("/signUp");
+            mav.setViewName("/userEdit");
             return mav;
         }
 
@@ -74,7 +74,7 @@ public class UserEditController {
         if(!userForm.getPassword().equals(userForm.getAnotherPassword())) {
             errorMessages.add("パスワードと確認用が一致しません");
             mav.addObject("errors", errorMessages);
-            mav.setViewName("/signUp");
+            mav.setViewName("/userEdit");
             return mav;
         }
 
@@ -82,12 +82,12 @@ public class UserEditController {
         if(userForm.getBranchId() == 1 && userForm.getDepartmentId() >= 3 ) {
             errorMessages.add("支社と部署の組み合わせが不正です");
             mav.addObject("errors", errorMessages);
-            mav.setViewName("/signUp");
+            mav.setViewName("/userEdit");
             return mav;
         } else if(userForm.getBranchId() >= 2 && userForm.getDepartmentId() <= 2) {
             errorMessages.add("支社と部署の組み合わせが不正です");
             mav.addObject("errors", errorMessages);
-            mav.setViewName("/signUp");
+            mav.setViewName("/userEdit");
             return mav;
         }
         userForm.setId(id);
