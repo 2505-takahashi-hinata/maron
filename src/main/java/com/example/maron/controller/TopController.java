@@ -39,6 +39,12 @@ public class TopController {
             userManageButton = true;
         }
 
+        List<String>errors =(List<String>)session.getAttribute("commentErrors");
+        if(errors != null){
+            mav.addObject("commentErrors",errors);
+            session.removeAttribute("commentErrors");
+        }
+
         List<UserMessage> messages = messageService.findAllMessage(start, end, category);
         List<UserComment> comments = commentService.findAllComment();
 
