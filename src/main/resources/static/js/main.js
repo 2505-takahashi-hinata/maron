@@ -18,7 +18,7 @@ $(document).ready(function() {
 });
 
 $(function() {
-    $('.変更') .on('click', function() {
+    $('.変更').off('click') .on('click', function() {
          if(!confirm('変更してよいですか？')){
             return false;
          }
