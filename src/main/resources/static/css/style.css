@@ -1,3 +1,4 @@
+
 .messages {
   margin: 20px auto;
   padding: 20px;
@@ -102,6 +103,70 @@ h2, h1{
 position: relative;
 margin-top:5px;
 margin-left:40px;
+}
+
+.loginLabel {
+    width: 90px;
+    display: inline-block;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.newMessageLabel {
+    width: 70px;
+    display: block;
+    margin-top: 10px;
+}
+
+.userLabel {
+    width: 150px;
+    display: inline-block;
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+.newMessageSubmit {
+    position: relative;
+    margin-top:10px;
+}
+
+.loginSubmit {
+    position: relative;
+    margin-top:10px;
+    margin-left:20px;
+}
+
+.userSubmit {
+    position: relative;
+    margin-bottom:10px;
+    margin-left:150px;
+}
+
+.main-contents .errorMessages{
+    font-weight: bold;
+}
+
+.deleteButton {
+  display       : inline-block;
+  border-radius : 5%;          /* 角丸       */
+  text-align    : center;      /* 文字位置   */
+  cursor        : pointer;     /* カーソル   */
+  background    : #ff4d4d;     /* 背景色     */
+  color         : #333333;     /* 文字色     */
+  border        : 2px solid #ff4d4d;    /* 枠の指定 */
+}
+.deleteButton:hover {
+  color         : #ff4d4d;     /* 背景色     */
+  background    : #333333;     /* 文字色     */
+}
+
+.newMessageSmall {
+    min-width: 500px;
+    min-height: 15px;
+}
+.newMessageLarge {
+    min-width: 800px;
+    min-height: 200px;
 }
 
 .text{

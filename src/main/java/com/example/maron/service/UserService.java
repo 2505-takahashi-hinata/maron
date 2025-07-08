@@ -100,8 +100,7 @@ public class UserService {
         //encryptメソッドにてパスワード暗号化
         String password = encrypt(encPassword);
         List<User> results =  userRepository.findByAccountAndPassword(account, password);
-//        暗号化しない場合
-//        List<User> results =  userRepository.findByAccountAndPassword(account, encPassword);
+
         //ユーザ情報０件の場合nullを返す
         if (results == null || results.isEmpty()){
             return null;

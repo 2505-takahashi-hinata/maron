@@ -54,7 +54,7 @@
                     <!--ログインユーザと投稿のUserIdが一致していたら表示-->
                     <form th:action="@{/deleteMessage/{id}(id=${message.id})}" th:method="delete" th:if="${loginUser.id == message.userId}">
                         <input type="hidden" name="messageUserId" th:value="${message.userId}">
-                        <input type="submit" value="投稿の削除" />
+                        <input class="deleteButton" type="submit" value="投稿の削除" />
                     </form>
                 </div>
                 <h4>コメント</h4>
@@ -67,7 +67,7 @@
                     <div  class="deleteComment">
     <!--                        ログインユーザとコメントのIdが一致していたら表示-->
                         <form th:action="@{/deleteComment/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id == comment.userId}">
-                            <input type="submit" value="コメントの削除" />
+                            <input class="deleteButton" type="submit" value="コメントの削除" />
                         </form>
                     </div>
                 </div>

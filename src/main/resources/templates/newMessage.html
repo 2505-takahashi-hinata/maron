@@ -14,13 +14,13 @@
             <!--エラーメッセージ-->
             <li class="errorMessages" th:each="error : ${#fields.detailedErrors()}" th:text="${error.message}"></li>
             <!--入力欄-->
-            <label>件名</label>
-            <textarea  th:field="*{title}" size="20" maxlength="200" /></textarea><br/>
-            <label>本文</label>
-            <textarea  th:field="*{text}" size="20" maxlength="1001" /></textarea><br/>
-            <label>カテゴリ</label>
-            <textarea  th:field="*{category}" size="20" maxlength="200" /></textarea><br/>
-            <input type="submit" value="投稿" />
+            <label class="newMessageLabel">件名</label>
+            <textarea class="newMessageSmall" th:field="*{title}" maxlength="200" /></textarea><br/>
+            <label class="newMessageLabel">本文</label>
+            <textarea  class="newMessageLarge" th:field="*{text}" maxlength="1001" /></textarea><br/>
+            <label class="newMessageLabel">カテゴリ</label>
+            <textarea  class="newMessageSmall" th:field="*{category}"  maxlength="200" /></textarea><br/>
+            <input class="newMessageSubmit" type="submit" value="投稿" />
         </form>
     </div>
     <div class="footer-contents">
