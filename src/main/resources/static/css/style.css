@@ -1,19 +1,19 @@
 .messages {
   margin: 20px auto;
   padding: 20px;
-  border: 2px solid #4c9ac0;
+  border: 2px solid rgba(128, 128, 128, 0.97);
   border-radius: 20px;
 }
 nav {
   width: 100%;
   height: 70px;
-  background-color: teal;
+  background: rgba(245, 245, 245, 0.97);
   padding-top: 5px;
+  margin-bottom:10px;
   box-sizing: border-box;
 }
-ul {
-  display: flex;
-
+.submit-list {
+    display:flex;
 }
 li {
   list-style: none;
@@ -26,12 +26,12 @@ a {
   margin-right: 35px;
 }
 
-.errorMessages{
+.errorMessages {
     	margin-top: 10px;
     	margin-right: 10px;
     	margin-bottom: 10px;
     	margin-left: 10px;
-    	color: red;
+    	color: #ff3366;
 }
 
 .user-icon{
@@ -46,19 +46,19 @@ a {
 .tag-list{
     display:flex;
     justify-content: space-between;
-     padding: 10px;
+     padding-bottom:20px;
      text-align: center;
      flex: 1;
-     margin: 0 10px;
+     margin: 0 auto;
 }
 
 .user-list{
     display:flex;
     justify-content: space-between;
-     padding: 10px;
+     padding-bottom:40px;
      text-align: center;
      flex: 1;
-     margin: 10px 10px;
+     margin: 0 auto;
 }
 
 .header-contents {
@@ -102,4 +102,39 @@ h2, h1{
 position: relative;
 margin-top:5px;
 margin-left:40px;
+}
+
+.text{
+  inline-size: 400px;
+  overflow-wrap: break-word;
+}
+
+.account {
+     position:absolute;
+     padding-left:10px;
+}
+
+.user-name {
+     position:absolute;
+     padding-left:200px;
+}
+
+.branch {
+     position:absolute;
+     padding-left:400px;
+}
+
+.department {
+     position:absolute;
+     padding-left:600px;
+}
+
+.edit {
+     position:absolute;
+     padding-left:1000px
+}
+.status {
+     position:absolute;
+     padding-left:800px;
+     z-index:1;
 }

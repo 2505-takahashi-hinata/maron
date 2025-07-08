@@ -11,7 +11,7 @@
     <div class="header-contents">
         <h1>ユーザー管理画面</h1>
     </div>
-    <div class="errorMessages" th:if="${errors != null}">
+    <div class="errorMessages">
         <ul>
             <li th:each="error : ${errors}">
                 <span th:text="${error}">Error message</span>
@@ -30,7 +30,6 @@
             <li class ="branch">支社</li>
             <li class ="department">部署</li>
             <li class ="status">ステータス</li>
-            <li class ="edit">ーーー</li>
         </ul>
     </div>
     <!--社員一覧-->
@@ -43,7 +42,7 @@
 
             <li class ="status">
                 <form th:action="@{/updateStatus/{id}(id=${user.id})}" th:method="put">
-                    <select name ="status">
+                    <select class ="status-select">
                         <option  th:each="map : ${changeStatus}"
                          th:value="${map.key}"
                          th:text="${map.value}"
@@ -56,8 +55,8 @@
                 </form>
             </li>
         <!--編集・削除-->
-            <li>
-        <div class="edit-button">
+            <li class="edit">
+        <div>
             <a th:href="@{/userEdit/{id}(id=${user.id})}">
                 <input type="button" value="編集">
             </a>
@@ -65,10 +64,10 @@
             </li>
         </ul>
     </div>
-</div>
     <form action="/maron/">
         <input class="back" type="submit" value="戻る" />
     </form>
+</div>
 <!--jQuery-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="/js/main.js"></script>
