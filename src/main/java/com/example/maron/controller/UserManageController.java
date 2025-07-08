@@ -42,31 +42,34 @@ public class UserManageController {
         UserForm loginUser = (UserForm) session.getAttribute("loginUser");
         int loginUserId = loginUser.getId();
         //エラーをsessionから取得
-        List<String> errors =(List<String>)session.getAttribute("errors");
-        if(errors != null){
-            mav.addObject("errors",errors);
+        List<String> errors = (List<String>) session.getAttribute("errors");
+        if (errors != null) {
+            mav.addObject("errors", errors);
             session.removeAttribute("errors");
-        // 画面遷移先を指定
-        mav.setViewName("/user");
-        // 準備した空のFormを保管
-        mav.addObject("loginUser", loginUserId);
-        mav.addObject("changeStatus", changeStatus());
-        mav.addObject("users", userData);
-        return mav;
-    }
+        }
+            // 画面遷移先を指定
+            mav.setViewName("/user");
+            // 準備した空のFormを保管
+            mav.addObject("loginUser", loginUserId);
+            mav.addObject("changeStatus", changeStatus());
+            mav.addObject("users", userData);
+            return mav;
+        }
 
-    private Map<Short, String> changeStatus() {
-        Map<Short, String> map = new LinkedHashMap<>();
-        map.put((short) 0, "稼働");
-        map.put((short) 1, "停止");
-        return map;
-    }
 
-    //ユーザーの復活・停止ステータス
-    @PutMapping("/updateStatus/{id}")
-    public ModelAndView updateStatus (@PathVariable Integer id, @RequestParam(name = "status", required = false) Short status) {
-        // 編集した投稿を更新
-        userService.changeStatus(id, status);
-        return new ModelAndView("redirect:/user");
-    }
+        private Map<Short, String> changeStatus () {
+            Map<Short, String> map = new LinkedHashMap<>();
+            map.put((short) 0, "稼働");
+            map.put((short) 1, "停止");
+            return map;
+        }
+
+        //ユーザーの復活・停止ステータス
+        @PutMapping("/updateStatus/{id}")
+        public ModelAndView updateStatus (@PathVariable Integer
+        id, @RequestParam(name = "status", required = false) Short status){
+            // 編集した投稿を更新
+            userService.changeStatus(id, status);
+            return new ModelAndView("redirect:/user");
+        }
 }

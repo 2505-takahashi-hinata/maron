@@ -12,15 +12,17 @@
     <div class="main-contents">
         <form method="post" action="/login" th:object="${userForm}">
             <!--エラーメッセージ-->
-            <li class="errorMessages" th:each="error : ${#fields.detailedErrors()}" th:text="${error.message}"></li>
-            <li class="errorMessages" th:each="message : ${message}" th:text="${message}"></li>
+            <div class="errorMessages">
+                <li  th:each="error : ${#fields.detailedErrors()}" th:text="${error.message}"></li>
+                <li  th:each="message : ${message}" th:text="${message}"></li>
+            </div>
             <!--入力欄-->
             <div>
-                <label>アカウント名</label>
+                <label class="loginLabel">アカウント名</label>
                 <input name="account" type="text" th:field="*{account}" ><br/>
-                <label>パスワード</label>
+                <label class="loginLabel">パスワード</label>
                 <input name="password" type="password" th:field="*{password}" ><br/>
-                <input type="submit" value="ログイン" />
+                <input class="loginSubmit" type="submit" value="ログイン" />
 
             </div>
         </form>

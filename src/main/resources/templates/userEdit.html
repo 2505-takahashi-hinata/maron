@@ -11,26 +11,24 @@
     <div class="header-contents">
       <h2>ユーザー編集</h2>
     </div>
-    <div class="errorMessages">
-      <ul>
-        <li th:each="error : ${errors}">
-          <span th:text="${error}">Error message</span>
-        </li>
-      </ul>
-    </div>
     <div class="main-contents">
+      <div class="errorMessages">
+          <li th:each="error : ${errors}">
+            <span th:text="${error}">Error message</span>
+          </li>
+      </div>
       <form class="user-form" th:action="@{/userUpdate/{id}(id=${user.id})}" th:method="post"  th:object="${user}">
       <div class="form-area">
-        <label>アカウント:</label>
+        <label class="userLabel">アカウント：</label>
         <input th:field="*{account}" ><br/>
-        <label>パスワード:</label>
+        <label class="userLabel">パスワード：</label>
           <input name="password" type="password"  th:field="*{password}" ><br/>
-        <label>パスワード（確認用）:</label>
+        <label class="userLabel">パスワード(確認用)：</label>
           <input  type="password"  th:field="*{anotherPassword}" ><br/>
-        <label>氏名:</label>
+        <label class="userLabel">氏名：</label>
           <input th:field="*{name}"><br/>
         <div th:if="${loginUser != user.id}">
-        <label>配属支社
+        <label class="userLabel">配属支社：</label>
           <select class ="select-branch" th:field="*{branchId}">
             <option value="0">選択</option>
             <option value="1">本社</option>
@@ -38,9 +36,8 @@
             <option value="3">B支社</option>
             <option value="4">C支社</option>
           </select>
-        </label>
       <br/>
-        <label>配属部署
+        <label class="userLabel">配属部署：</label>
           <select class ="select-department" th:field="*{departmentId}">
             <option value="0">選択</option>
             <option value="1">総務人事部</option>
@@ -48,7 +45,6 @@
             <option value="3">営業部</option>
             <option value="4">技術部</option>
           </select>
-        </label>
         </div>
         <div th:if="${loginUser == user.id}">
           <input type="hidden" name="branchId" th:value="*{branchId}">
@@ -56,7 +52,7 @@
         </div>
       </br>
         <input type="hidden" name="isStopped" th:value="*{isStopped}">
-        <input type="submit" value="更新" />
+        <input class="userSubmit" type="submit" value="更新" />
       </div>
       </form>
     </div>
