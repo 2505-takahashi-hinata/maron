@@ -10,7 +10,7 @@
 <body>
 <header>
     <nav>
-    <ul>
+    <ul class= "submit-list">
         <li>
             <form action="/newMessage">
                 <input type="submit" value="新規投稿" />
@@ -46,7 +46,7 @@
         <div class="messages" th:each="message:${messages}">
             <h2 th:text="${message.title}"></h2>
             <h3>投稿内容</h3>
-                <p th:text="${message.text}" style="white-space: pre-line;"></p>
+                <p class="text" th:text="${message.text}" style="white-space: pre-line;"></p>
                 <p>カテゴリー：<span th:text="${message.category}"></span></p>
                 <p>投稿日時：<span th:text="${#dates.format(message.updatedDate,'yyyy/MM/dd')}"></span></p>
                 <p>投稿者：<span th:text="${message.name}"></span></p>
@@ -59,8 +59,11 @@
                 </div>
                 <h4>コメント</h4>
                 <div class="comments" th:each="comment:${comments}" th:if="${comment.messageId == message.id}">
+
+                    <h4>コメント</h4>
                     <p th:text="${comment.text}" style="white-space: pre-line;"></p>
                     <p>コメントした人：<span th:text="${comment.name}"></span></p>
+
                     <div  class="deleteComment">
     <!--                        ログインユーザとコメントのIdが一致していたら表示-->
                         <form th:action="@{/deleteComment/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id == comment.userId}">

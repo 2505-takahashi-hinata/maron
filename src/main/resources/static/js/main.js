@@ -25,3 +25,11 @@ $(function() {
     });
 });
 
+function changeColor() {
+  const element = document.getElementById('status-select');
+  const value = parseInt(document.getElementById('map.key').value); // 入力された値を数値に変換
+
+  if (value == 1) {
+    element.style.backgroundColor = 'red';
+}
+}
