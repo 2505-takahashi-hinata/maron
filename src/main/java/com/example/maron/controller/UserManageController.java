@@ -46,7 +46,7 @@ public class UserManageController {
         if(errors != null) {
             mav.addObject("errors", errors);
             session.removeAttribute("errors");
-            // 画面遷移先を指定
+
         }
         mav.setViewName("/user");
         // 準備した空のFormを保管
