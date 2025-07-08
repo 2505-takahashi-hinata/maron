@@ -67,8 +67,13 @@ public class UserService {
 
     //ユーザー編集画面遷移のためのID取得
     public UserForm editUser(Integer id) throws ParseException {
+//        List<User> results = new ArrayList<>();
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null ){
+            return null;
+        }
         List<User> results = new ArrayList<>();
-        results.add((User) userRepository.findById(id).orElse(null));
+        results.add(user);
         List<UserForm> users = setUserForm(results);
         return users.get(0);
     }
