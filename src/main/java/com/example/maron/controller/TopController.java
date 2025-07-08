@@ -40,11 +40,15 @@ public class TopController {
         }
 
         List<String>errors =(List<String>)session.getAttribute("commentErrors");
-        CommentForm errorId =(CommentForm)session.getAttribute("commentForm");
+        CommentForm errorCommentForm =(CommentForm)session.getAttribute("commentForm");
         if(errors != null){
-            mav.addObject("commentErrorId",errorId);
-            mav.addObject("commentErrors",errors);
+            mav.addObject("commentForm",errorCommentForm);
+            mav.addObject("commentErrorMessage",errors);
             session.removeAttribute("commentErrors");
+            session.removeAttribute("commentForm");
+        }
+        if(errorCommentForm ==null){
+            mav.addObject("commentForm",new CommentForm());
         }
 
         List<UserMessage> messages = messageService.findAllMessage(start, end, category);

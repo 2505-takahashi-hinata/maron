@@ -56,7 +56,6 @@ public class UserManageController {
             return mav;
         }
 
-
         private Map<Short, String> changeStatus () {
             Map<Short, String> map = new LinkedHashMap<>();
             map.put((short) 0, "稼働");
