@@ -6,9 +6,12 @@ import com.example.maron.dto.userManage;
 import com.example.maron.repository.UserRepository;
 import com.example.maron.repository.entity.User;
 import io.micrometer.common.util.StringUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -83,13 +86,22 @@ public class UserService {
     }
 
     public void saveUser(UserForm userForm) throws ParseException {
+        //encryptメソッドでパスワード暗号化したものをuserFormにセット
+        if(userForm.getPassword() != null){
+            String password = encrypt(userForm.getPassword());
+            userForm.setPassword(password);
+        }
         User saveUser = setUserEntity(userForm);
         userRepository.save(saveUser);
     }
 
     //ログイン情報取得
-    public UserForm loginCheck(String account, String password) throws ParseException {
-        List<User> results =  userRepository.findByAccountAndPassword(account, password);
+    public UserForm loginCheck(String account, String encPassword) throws ParseException {
+        //encryptメソッドにてパスワード暗号化
+//        String password = encrypt(encPassword);
+//        List<User> results =  userRepository.findByAccountAndPassword(account, password);
+//        暗号化しない場合
+        List<User> results =  userRepository.findByAccountAndPassword(account, encPassword);
         //ユーザ情報０件の場合nullを返す
         if (results == null || results.isEmpty()){
             return null;
@@ -122,6 +134,19 @@ public class UserService {
             return userRepository.existsByAccount(account);
         } else {
             return  userRepository.existsByAccountAndIdNot(account, id);
+        }
+    }
+
+    //パスワード暗号化のメソッド
+    //SHA-256で暗号化し、バイト配列をBase64エンコーディング。暗号化された文字列をreturn
+    //（単純に復号化できない｢SHA-256」=ハッシュアルゴリズムを利用。バイト配列より文字列の方が扱いやすいため、 Base64でエンコードを行う）
+    public String encrypt(String Password) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(Password.getBytes());
+            return Base64.encodeBase64URLSafeString(md.digest());
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 }

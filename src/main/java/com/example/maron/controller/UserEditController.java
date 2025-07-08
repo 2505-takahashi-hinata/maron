@@ -8,6 +8,7 @@ import com.example.maron.service.DepartmentService;
 import com.example.maron.service.UserService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.http.HttpSession;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +108,6 @@ public class UserEditController {
             mav.setViewName("/userEdit");
             return mav;
         }
-
         userService.saveUser(userForm);
         return new ModelAndView("redirect:/user");
     }
