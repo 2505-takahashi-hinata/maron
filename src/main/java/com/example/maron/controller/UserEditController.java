@@ -69,6 +69,8 @@ public class UserEditController {
                                    @ModelAttribute("user") @Validated({ UserForm.UserEdit.class}) UserForm userForm, BindingResult result) throws ParseException {
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
+        UserForm loginUser = (UserForm) session.getAttribute("loginUser");
+        int loginUserId = loginUser.getId();;
         userForm.setId(id);
         //エラーメッセージを表示
         if(result.hasErrors()) {
@@ -76,6 +78,7 @@ public class UserEditController {
                 errorMessages.add(error.getDefaultMessage());
             }
             mav.addObject("errors", errorMessages);
+            mav.addObject("loginUser",loginUserId);
             mav.setViewName("/userEdit");
             return mav;
         }
@@ -83,6 +86,7 @@ public class UserEditController {
         //パスワードの一致確認
         if(!userForm.getPassword().equals(userForm.getAnotherPassword())) {
             errorMessages.add("パスワードと確認用が一致しません");
+            mav.addObject("loginUser",loginUserId);
             mav.addObject("errors", errorMessages);
             mav.setViewName("/userEdit");
             return mav;
@@ -91,11 +95,13 @@ public class UserEditController {
         //部署と支社の一致確認
         if(userForm.getBranchId() == 1 && userForm.getDepartmentId() >= 3 ) {
             errorMessages.add("支社と部署の組み合わせが不正です");
+            mav.addObject("loginUser",loginUserId);
             mav.addObject("errors", errorMessages);
             mav.setViewName("/userEdit");
             return mav;
         } else if(userForm.getBranchId() >= 2 && userForm.getDepartmentId() <= 2) {
             errorMessages.add("支社と部署の組み合わせが不正です");
+            mav.addObject("loginUser",loginUserId);
             mav.addObject("errors", errorMessages);
             mav.setViewName("/userEdit");
             return mav;
@@ -103,6 +109,7 @@ public class UserEditController {
         //アカウント重複用
         if(userService.checkAccount(userForm.getAccount(), userForm.getId())){
             errorMessages.add("アカウントが重複しています");
+            mav.addObject("loginUser",loginUserId);
             mav.addObject("errors", errorMessages);
             mav.setViewName("/userEdit");
             return mav;

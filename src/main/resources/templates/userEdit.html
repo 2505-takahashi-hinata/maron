@@ -19,7 +19,7 @@
       </ul>
     </div>
     <div class="main-contents">
-      <form th:action="@{/userUpdate/{id}(id=${user.id})}" th:method="post"  th:object="${user}">
+      <form class="user-form" th:action="@{/userUpdate/{id}(id=${user.id})}" th:method="post"  th:object="${user}">
       <div class="form-area">
         <label>アカウント:</label>
         <input th:field="*{account}" ><br/>
@@ -62,7 +62,7 @@
     </div>
 <div class="footer-contents">
   <form action="/user">
-    <input type="submit" value="戻る" />
+    <input class="back" type="submit" value="戻る" />
   </form>
 </div>
 </body>
