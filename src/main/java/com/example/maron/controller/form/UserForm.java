@@ -2,6 +2,7 @@ package com.example.maron.controller.form;
 
 
 import com.example.maron.controller.LoginController;
+import com.example.maron.validator.PasswordValidator;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -23,6 +24,8 @@ public class UserForm {
     private String account;
     @NotBlank(message ="パスワードを入力してください", groups = {LoginController.LoginGroup.class, UserData.class})
     @Pattern(regexp="^[a-z]{6,20}$", message = "パスワードは半角文字かつ6文字以上20文字以下で入力してください", groups = {UserData.class})
+    //ユーザ編集用カスタムバリデーション（入力されている場合は文字数チェック）
+    @PasswordValidator(message = "パスワードは半角文字かつ6文字以上20文字以下で入力してください", groups = {UserEdit.class})
     private String password;
     private String anotherPassword;
     @NotBlank(message ="氏名を入力してください", groups = {UserData.class, UserEdit.class})

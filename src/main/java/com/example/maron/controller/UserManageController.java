@@ -41,6 +41,11 @@ public class UserManageController {
         List<userManage> userData = userService.findAllUser();
         UserForm loginUser = (UserForm) session.getAttribute("loginUser");
         int loginUserId = loginUser.getId();
+        //エラーをsessionから取得
+        List<String> errors =(List<String>)session.getAttribute("errors");
+        if(errors != null){
+            mav.addObject("errors",errors);
+            session.removeAttribute("errors");
         // 画面遷移先を指定
         mav.setViewName("/user");
         // 準備した空のFormを保管

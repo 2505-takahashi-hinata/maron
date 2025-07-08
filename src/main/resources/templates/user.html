@@ -11,7 +11,7 @@
     <div class="header-contents">
         <h1>ユーザー管理画面</h1>
     </div>
-    <div class="errorMessages">
+    <div class="errorMessages" th:if="${errors != null}">
         <ul>
             <li th:each="error : ${errors}">
                 <span th:text="${error}">Error message</span>
