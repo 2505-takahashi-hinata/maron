@@ -42,7 +42,7 @@
 
             <li class ="status">
                 <form th:action="@{/updateStatus/{id}(id=${user.id})}" th:method="put">
-                    <select class ="status-select">
+                    <select name ="status">
                         <option  th:each="map : ${changeStatus}"
                          th:value="${map.key}"
                          th:text="${map.value}"
