@@ -50,13 +50,10 @@ public class LoginController {
             mav.setViewName("/login");
             return mav;
         }
-//        //encryptメソッドでパスワード暗号化されたものを用意
         String password = userForm.getPassword();
-//        String encPassword = encrypt(userForm.getPassword());
         String account = userForm.getAccount();
-//        //データベースからユーザ情報取得
+        //データベースからユーザ情報取得
         userForm = UserService.loginCheck(account, password);
-//        userForm = UserService.loginCheck(account, encPassword);
         //ユーザ情報チェック　情報ない場合・停止中の場合はログイン画面へフォワード
         if ((userForm == null)|| (userForm.getIsStopped() == 1 )) {
             mav.addObject("message", "ログインに失敗しました");
@@ -69,20 +66,6 @@ public class LoginController {
         return new ModelAndView("redirect:/maron/");
     }
 
-
-    //パスワード暗号化のメソッド
-    //SHA-256で暗号化し、バイト配列をBase64エンコーディング。暗号化された文字列をreturn
-    //（単純に復号化できない｢SHA-256」=ハッシュアルゴリズムを利用。バイト配列より文字列の方が扱いやすいため、 Base64でエンコードを行う）
-    public String encrypt(String Password) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            md.update(Password.getBytes());
-            return Base64.encodeBase64URLSafeString(md.digest());
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     //ログアウト処理
     @GetMapping("/logout")
     public ModelAndView logout() {
@@ -90,5 +73,4 @@ public class LoginController {
         session.invalidate();
         return new ModelAndView("redirect:/login");
     }
-
 }

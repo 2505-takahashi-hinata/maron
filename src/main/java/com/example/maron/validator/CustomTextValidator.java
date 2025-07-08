@@ -3,7 +3,7 @@ package com.example.maron.validator;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class CustomValidator implements ConstraintValidator<Validator, String> {
+public class CustomTextValidator implements ConstraintValidator<TextValidator, String> {
 
     @Override
     public boolean isValid(String input, ConstraintValidatorContext con) {
