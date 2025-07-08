@@ -57,9 +57,10 @@
                         <input type="submit" value="投稿の削除" />
                     </form>
                 </div>
+                <h4>コメント</h4>
                 <div class="comments" th:each="comment:${comments}" th:if="${comment.messageId == message.id}">
-                    <h4>コメント</h4>
                     <p th:text="${comment.text}" style="white-space: pre-line;"></p>
+                    <p>コメントした人：<span th:text="${comment.name}"></span></p>
                     <div  class="deleteComment">
     <!--                        ログインユーザとコメントのIdが一致していたら表示-->
                         <form th:action="@{/deleteComment/{id}(id=${comment.id})}" th:method="delete" th:if="${loginUser.id == comment.userId}">
@@ -69,13 +70,13 @@
                 </div>
             <div class="comment">
                 <!-- エラーメッセージ表示 -->
-                <div class="errorMessages"  th:if="${commentErrors != null and commentErrorId.messageId == message.id}"
-                     th:each="commentError : ${commentErrors}">
+                <div class="errorMessages"  th:if="${commentErrorMessage != null and commentForm.messageId == message.id}"
+                     th:each="commentError : ${commentErrorMessage}">
                     <span th:text="${commentError}"></span>
                 </div>
                 <form method="post" action="/addComment" th:object="${commentForm}">
                     <label>コメント投稿</label>
-                    <textarea class="text-box" name="text" th:value="text" ></textarea><br/>
+                    <textarea class="text-box" name="text" th:text="${commentForm.text}" ></textarea><br/>
                         <input type="hidden" th:value="${message.id}" name="messageId"/>
                         <input type="submit" value="送信"/>
                 </form>

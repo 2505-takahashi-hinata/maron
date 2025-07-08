@@ -98,10 +98,10 @@ public class UserService {
     //ログイン情報取得
     public UserForm loginCheck(String account, String encPassword) throws ParseException {
         //encryptメソッドにてパスワード暗号化
-//        String password = encrypt(encPassword);
-//        List<User> results =  userRepository.findByAccountAndPassword(account, password);
+        String password = encrypt(encPassword);
+        List<User> results =  userRepository.findByAccountAndPassword(account, password);
 //        暗号化しない場合
-        List<User> results =  userRepository.findByAccountAndPassword(account, encPassword);
+//        List<User> results =  userRepository.findByAccountAndPassword(account, encPassword);
         //ユーザ情報０件の場合nullを返す
         if (results == null || results.isEmpty()){
             return null;
