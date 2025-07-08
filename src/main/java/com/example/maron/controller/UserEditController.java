@@ -33,11 +33,11 @@ public class UserEditController {
     @Autowired
     HttpSession session;
 
-    @GetMapping("/userEdit/{id}")
-    public ModelAndView userEdit (@PathVariable String id) throws ParseException {
+    @GetMapping({"/userEdit/{id}","/userEdit/"})
+    public ModelAndView userEdit (@PathVariable(required = false) String id) throws ParseException {
         ModelAndView mav = new ModelAndView();
         List<String> errorMessages = new ArrayList<>();
-        if(StringUtils.isBlank(id) || !id.matches("^[1-9]+$")){
+        if(StringUtils.isBlank(id) || !id.matches("^[0-9]*$")){
             errorMessages.add("不正なパラメータが入力されました");
             session.setAttribute("errors", errorMessages);
             return new ModelAndView("redirect:/user");
@@ -46,8 +46,8 @@ public class UserEditController {
         UserForm userForm = userService.editUser(intId);
         if(userForm == null){
             errorMessages.add("不正なパラメーターが入力されました");
-            session.setAttribute("commentErrors", errorMessages);
-            mav.addObject("errors", errorMessages);
+            session.setAttribute("errors", errorMessages);
+            //mav.addObject("errors", errorMessages);
             return new ModelAndView("redirect:/user");
         }
         UserForm loginUser = (UserForm) session.getAttribute("loginUser");
